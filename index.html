@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -12,7 +12,7 @@
 
     <!-- site styles, overriding above -->
     <link rel="stylesheet" href="css/site.css" />
-    <link rel="stylesheet" href="js/OrthoButton/css/OrthoButton.css" />
+    <!--<link rel="stylesheet" href="js/OrthoButton/css/OrthoButton.css" />-->
 
     <!-- DATATABLES stuff -->
     <script src="js/DataTables-1.9.4/js/jquery.dataTables.js"></script>
@@ -24,7 +24,7 @@
     <!-- ESRI Mapping Stuff -->
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css" />
 
-    <script>
+    <!--<script>
         var dojoConfig = {
             packages: [{
                 name: "orthobutton",
@@ -35,13 +35,14 @@
                 location: "/js/myModules"
             }]
         };
-    </script>
+    </script>-->
 
     <script src="http://js.arcgis.com/3.9/"></script>
 
     <script src="js/UIController.js"></script>
     <script src="js/MapController.js"></script>
     <script src="js/SearchController.js"></script>
+    <script src="js/ListController.js"></script>
 
     <script>
         var gridStreets;
@@ -71,9 +72,9 @@
         dojo.require("esri.InfoTemplate");
         dojo.require("dojo._base.connect");
         dojo.require("dojo._base.Color");
-        dojo.require("esri.dijit.HomeButton");
-        dojo.require("orthobutton.OrthoButton");
-        dojo.require("myModules.customoperation");
+        //dojo.require("esri.dijit.HomeButton");
+        //dojo.require("orthobutton.OrthoButton");
+        //dojo.require("myModules.customoperation");
         dojo.require("dojo.domReady!");
 
         //esriConfig.defaults.io.proxyUrl = "http://localhost:62617/proxy.ashx";
@@ -122,17 +123,10 @@
             esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer");
             UIController.init();
             MapController.init();
+            ListController.init();
             SearchController.init();
-
-            //on page load display all the permits to the map based on the current permits from / to dates +/- 2 days.
-            /*PermitController.getAllPermits(function (data) {
-
-                $.each(data, function (index, element) {
-                    MapController.zoomAndCenterToPermit(element, false, true, false);
-                });
-
-            });*/
         }
+
         dojo.ready(init);
 
         //loads jquery ui elements

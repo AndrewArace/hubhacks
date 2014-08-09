@@ -11,19 +11,9 @@ var SearchController = {
         console.log("SearchController.initUIActions()");
 
         $("#btnSearch").button().click(function (event) {
-
-            //temp testing
-            var obj = {"segmentId":1,"segmentFrom":1.0,"segmentTo":2.0,"permitId":"73f892da-ee9c-4c1a-8aa2-25cc7ad018de"}
-            $.ajax({
-                type: "POST",
-                url: "/api/samsegment",
-                data: obj,
-                dataType: "json",
-                traditional: true
-            });
-
             gridStreets.fnClearTable();
             gridAddresses.fnClearTable();
+            MapController.clearMap();
 
             var searchString = $("#txtSearch").val();
 
@@ -68,6 +58,11 @@ var SearchController = {
             if (data.addressResults != null) {
                 gridAddresses.fnAddData(data.addressResults, true);
                 addressLength = data.addressResults.length;
+
+                MapController.clearMap();
+                $.each(data.addressResults, function (index, value) {
+                    MapController.drawAddress(value);
+                });
             }
 
             var addrString = "Addresses ({0})".replace("{0}", addressLength);
