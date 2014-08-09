@@ -11,25 +11,19 @@
 
         var s = "";
 
-        s += "<tbody>";
-        //s += "<thead><tr><th>Address</th><th>Neighborhood</th><th>Zip Code</th><th>Parcel</th><tr></thead><tbody>";
-
         addresses.forEach(function (addressEntry) {
-            s += "<tr>";
-            s += "<td colspan='5'>" + addressEntry.fullAddress + ", " + addressEntry.mailingNeighborhood + ", " + addressEntry.zipCode + "</td>";
-            //s += "<td>" + addressEntry.fullAddress + "</td>";
-            //s += "<td>" + addressEntry.mailingNeighborhood + "</td>";
-            //s += "<td>" + addressEntry.zipCode + "</td>";
-            //s += "<td>" + addressEntry.spatialParcelPID + "</td>";
-            s += "</tr>";
+            s += "<li class='address-items'><strong>";
+            s += "<span class='glyphicon glyphicon-map-marker'></span>" 
+            s += addressEntry.fullAddress + ", ";
+            s += addressEntry.mailingNeighborhood + ", Boston ";
+            s += addressEntry.zipCode;
+            s += "</strong></li><hr/>";
         });
-
-        s += "</tbody>";
 
         d3.select(".result-table").html(s);
 
-        d3.selectAll("tbody tr").data(addresses).on("mouseover", function () {
-            d3.select(this).style("background-color", "green").style("cursor", "pointer");
+        d3.selectAll("ul li").data(addresses).on("mouseover", function () {
+            d3.select(this).style("background-color", "rgba(200, 200, 200, 0.5)").style("cursor", "pointer");
         }).on("mouseout", function () {
             d3.select(this).style("background-color", "white");
         }).on("click", function (d) {
