@@ -48,17 +48,7 @@ var MapController = {
 
         dojo.connect(map, "onClick", this.handleMapClick);
 
-        //map dijits
-        var home = new esri.dijit.HomeButton({
-            map: map
-        }, "HomeButton");
-        home.startup();
-
-        var ortho = new esri.dijit.OrthoButton({
-            mapService: ortholayer,
-            serviceVisible : false
-        }, "OrthoButton");
-        ortho.startup();
+    
 
         map.resize();
     },

@@ -1,5 +1,6 @@
 ﻿//var gridStreets;
 //var gridAddresses;
+console.log("SEARCH CONTROLLER");
 var SearchController = {
 
     init: function () {
@@ -9,9 +10,8 @@ var SearchController = {
 
     initUIActions: function () {
         console.log("SearchController.initUIActions()");
-
         $("#btnSearch").button().click(function (event) {
-
+            console.log("SEARCH BUTTON CALLED");
             //temp testing
             var obj = {"segmentId":1,"segmentFrom":1.0,"segmentTo":2.0,"permitId":"73f892da-ee9c-4c1a-8aa2-25cc7ad018de"}
             $.ajax({
