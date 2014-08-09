@@ -38,8 +38,11 @@
     },
 
 
-    highlightAddress: function (addressObject) {
-        
+    highlightAddress: function (d) {
+        d3.select(".confirmation-full-address").html("<p>" + d.fullAddress + "</p>");
+        d3.select(".confirmation-mailing-neighborhood").html("<p>" + d.mailingNeighborhood + "</p>");
+        d3.select(".confirmation-zip-code").html("<p>" + d.zipCode + "</p>");
+        d3.select(".confirmation-spatial-parcel-pid").html("<p>" + d.spatialParcelPID + "</p>");
     },
 
     clear: function () {
