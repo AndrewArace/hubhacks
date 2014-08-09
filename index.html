@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
 
         <meta charset="utf-8">
@@ -24,6 +23,7 @@
 
         <!-- site styles, overriding above -->
         <link rel="stylesheet" href="css/site.css" />
+        <link href="css/style.css" rel = "stylesheet">
         <!--<link rel="stylesheet" href="js/OrthoButton/css/OrthoButton.css" />-->
 
         <!-- DATATABLES Stuff -->
@@ -38,6 +38,7 @@
 
         <!-- D3 Stuff -->
         <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+
 
         <!--<script>
             var dojoConfig = {
@@ -154,11 +155,18 @@
 
     <body>
 
-        <!--page header-->
-        <div class="header">
+    	<!--top bar-->
+		<div class = "topheader">
+			<div class="panel panel-default">
+				  <div class="panel-body">
+				    <h1>Where's My Address?</h1>
+            	  </div>
+			</div>
+		</div><!--close topheader-->
 
+        <!--search-->
+        <div class="search">
             <div class="row">
-
                 <!-- search bar-->
                 <div class="col-md-8">
                     <input type="text" id="txtSearch" class="form-control" placeholder="Enter your Address">
@@ -170,7 +178,7 @@
 
             </div><!--close row-->
 
-        </div><!--close header-->
+        </div><!--close search-->
 
         <!--main page area-->
         <div class="page-wrapper">
@@ -220,4 +228,5 @@
     </div>
 
     </body>
+
 </html>

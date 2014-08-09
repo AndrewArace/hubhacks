@@ -1,0 +1,128 @@
+/*style sheet*/
+
+#body{
+	height: 100%;
+	width: 1024px;
+}
+
+.header, 
+.panel.panel-default,
+.panel-body{
+	width: 100%;
+	height: 40px;
+	background-color:#6FB07F;
+	box-shadow: 5px 5px 5px #9BA4AA;
+}
+
+.header, 
+.panel.panel-default,
+.panel-body h1 {
+	position: relative;
+	font-size: 24px;
+	color: #ffffff;
+	margin-top: 0px;
+	margin-bottom: 5px;
+}
+ 
+.search,
+.form-control{
+	margin-left: 5px;
+	margin-top: 10px;
+}
+
+.search, 
+.btn.btn-default{
+	margin-top: 10px;
+}
+
+.page-wrapper,
+.sidebar{
+	margin-left: 5px;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #6891AA;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.form-control:focus {
+  border-color: #E1EEF6;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+.btn-default {
+color: #333;
+background-color: #fff;
+border:1px solid #6891AA;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  color: #333;
+  background-color: #E1EEF6;
+  border-color: #adadad;
+}
+
+.page-wrapper,
+.sidebar{
+	vertical-align: left;
+}
+
+.page-wrapper,
+.mapside{
+	vertical-align:right;
+}
+.page-wrapper,
+.sidebar .table{
+	margin-top: 10px;
+}
+.page-wrapper,
+.sidebar .table th{
+	border-left: 1px solid #cbcbcb;
+	border-width: 0 0 0 3px;
+	font-size: inherit;
+	margin: 0;
+	overflow: visible;
+}
+
+.page-wrapper,
+.sidebar .table tr{
+	border-left: 1px solid #496577;
+	border-width: 0 0 0 3px;
+	font-size: inherit;
+	margin: 0;
+	overflow: visible;
+}
+
+.page-wrapper,
+.sidebar .table td{
+	border-left: 1px solid #cbcbcb;
+	border-width: 0 0 0 3px;
+	font-size: inherit;
+	margin: 0;
+	overflow: visible;
+}
+
+div#mapDiv.col-md-8.map{
+	border:1px solid #6891AA;
+	margin-top: 10px;
+}
