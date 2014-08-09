@@ -32,13 +32,13 @@ var SearchController = {
     searchSAMBuilding: function (buildingId) {
         var url = searchServiceBuilding.replace("{0}", buildingId);
 
-        $("#imgLoadingSpinner").show();
+        UIController.setLoading(true);
         $.getJSON(url, function (data) {
             ListController.setResults(data);
             MapController.setResults(data);
             }
         ).always(function () {
-            $("#imgLoadingSpinner").hide();
+            UIController.setLoading(false);
         });
     },
 
@@ -46,9 +46,9 @@ var SearchController = {
     searchSAM: function (searchString) {
         var url = searchService.replace("{0}", searchString);
 
-        $("#txtSearch").prop("disabled", true);
-        $("#btnSearch").prop("disabled", true);
-        $("#imgLoadingSpinner").show();
+        //$("#txtSearch").prop("disabled", true);
+        //$("#btnSearch").prop("disabled", true);
+        UIController.setLoading(true);
 
         $.getJSON(url, function (data) {
             $("#tabMain").show("fold");
@@ -62,9 +62,9 @@ var SearchController = {
             MapController.setResults(data.addressResults);
 
         }).always(function () {
-            $("#txtSearch").prop("disabled", false);
-            $("#btnSearch").prop("disabled", false);
-            $("#imgLoadingSpinner").hide();
+            //$("#txtSearch").prop("disabled", false);
+            //$("#btnSearch").prop("disabled", false);
+            UIController.setLoading(false);
         });
     }
 };

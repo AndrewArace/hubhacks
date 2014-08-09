@@ -95,6 +95,8 @@ var MapController = {
                 j.fullAddress = f.attributes.FULL_ADDRESS;
                 j.zipCode = f.attributes.ZIP_CODE;
                 j.spatialParcelPID = f.attributes.PARCEL;
+                j.xCoord = f.attributes.X_COORD;
+                j.yCoord = f.attributes.Y_COORD;
                 addresses.push(j);
 
                 //{
@@ -124,6 +126,8 @@ var MapController = {
             }
 
             ListController.setResults(addresses);
+            MapController.setResults(addresses);
+            UIController.setLoading(false);
 
         })
         queryTask.execute(query);
@@ -139,6 +143,7 @@ var MapController = {
         if (MapController.ignoreMapclick) {
             return;
         }
+        UIController.setLoading(true);
         //search for building at location
         var queryTask = new esri.tasks.QueryTask("http://maps.cityofboston.gov/ArcGIS/rest/services/SAM/maint_tool/MapServer/11");
 
@@ -159,6 +164,7 @@ var MapController = {
                 var buildingID = b.attributes.BID;
 
                 MapController.doBIDSearch(buildingID);
+                UIController.setLoading(false);
                 return;
             }
             else {
@@ -227,6 +233,11 @@ var MapController = {
         $.each(addresses, function (index, value) {
             MapController.drawAddress(value);
         });
+        if (addresses.length > 0) {
+            var ext = esri.graphicsExtent(MapController.glAddressHighlight.graphics);
+            ext.spatialReference = map.spatialReference;
+            map.setExtent(ext, true);
+        }
     },
 
 
@@ -234,6 +245,7 @@ var MapController = {
         MapController.glAddressHighlight.clear();
         MapController.glStreetHighlight.clear();
         MapController.glBuildingHighlight.clear();
+        MapController.glMapClickHighlight.clear();
         map.infoWindow.hide();
     },
 

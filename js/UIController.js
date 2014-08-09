@@ -38,5 +38,14 @@ var UIController = {
                 map.resize();
             }, 500);
         });
+    },
+
+    setLoading : function (isLoading) {
+        if (isLoading) {
+            $("#imgLoadingSpinner").show();
+        }
+        else {
+            $("#imgLoadingSpinner").hide();
+        }
     }
 };
