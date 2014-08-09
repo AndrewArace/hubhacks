@@ -1,9 +1,10 @@
+// var selectedResult = null;
+
 var ListController = {
 
     init: function () {
         console.log("ListController.init()");
     },
-
 
     setResults: function (addresses) {
         ListController.clear();
@@ -26,15 +27,21 @@ var ListController = {
 
         s += "</tbody>";
 
-        d3.select(".table").html(s);
+        d3.select(".result-table").html(s);
 
         d3.selectAll("tbody tr").data(addresses).on("mouseover", function(){
             d3.select(this).style("background-color", "green").style("cursor", "pointer");
         }).on("mouseout", function(){
             d3.select(this).style("background-color", "white");
         }).on("click", function(d){
+            // Update data
             ListController.highlightAddress(d);
             MapController.highlightAddress(d);
+            d3.select(".confirmation-address-id").html("<p>"+d.addressId+"</p>");
+            d3.select(".confirmation-full-address").html("<p>"+d.fullAddress+"</p>");
+            d3.select(".confirmation-mailing-neighborhood").html("<p>"+d.mailingNeighborhood+"</p>");
+            d3.select(".confirmation-zip-code").html("<p>"+d.zipCode+"</p>");
+            d3.select(".confirmation-spatial-parcel-pid").html("<p>"+d.spatialParcelPID+"</p>");
         });
     },
 
@@ -42,8 +49,12 @@ var ListController = {
     highlightAddress: function (addressObject) {
         //TODO: find the result with this addressId, and highlight it
         console.log("Highlight address!");
+        // selectedResult = addressObject;
     },
 
+    // getSelectedResult: function () {
+    //     return selectedResult;
+    // },
 
     clear: function () {
         //TODO: clear results grid

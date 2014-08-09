@@ -187,7 +187,7 @@
                 <!--left results bar-->
                 <div class="sidebar">
                     <div class="col-md-4">
-                    <table class="table">
+                    <table class="result-table">
                         
                       </table>
                      </div><!-- columnmd7 div-->
@@ -205,7 +205,7 @@
 
     <!-- Button trigger modal -->
     <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-        Launch demo modal
+        Confirm Location
     </button>
 
     <!-- Modal -->
@@ -214,14 +214,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Location</h4>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <p class="confirmation-address-id"></p>
+                    <p class="confirmation-full-address"></p>
+                    <p class="confirmation-mailing-neighborhood"></p>
+                    <p class="confirmation-zip-code"></p>
+                    <p class="confirmation-spatial-parcel-pid"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
                 </div>
             </div>
         </div>
