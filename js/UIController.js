@@ -24,24 +24,6 @@ var UIController = {
 
         $("#imgLoadingSpinner").hide();
 
-        //address header link handler
-        $("#lblHeaderAddressInfo").click(function (event) {
-            if (currentlySelectedPermit != null) {
-                var addid = currentlySelectedPermit.PropertyAddress.Id;
-
-                var url = addressService.replace("{0}", addid);
-                $.getJSON(url, function (data) {
-                    if (data == null) {
-                        return;
-                    }
-
-                    MapController.zoomAndCenterToAddress(data, true, true, true);
-                });
-            }
-        });
-
-        $("#tabMain").tabs().hide();
-
         $("#txtSearch").on('keypress', function (event) {
             if (event.which == '13') {
                 $("#btnSearch").click();
@@ -54,38 +36,7 @@ var UIController = {
             resizeTimer = setTimeout(function () {
                 console.log("window resize");
                 map.resize();
-                $("#dlgSearch").dialog("option", "position", { my: "left top", at: "right bottom", of: "#headerDiv" });
             }, 500);
         });
-
-        $("#dlgSearch").dialog({
-            width: 800
-                , dialogClass: "NoCloseButton"
-                , autoOpen: false
-                , draggable: false
-                , height: 400
-                , collapsable: true
-                , resizable: false
-                , position: { my: "left top", at: "right bottom", of: "#headerDiv" }
-        });
-
-        $("#dlgConfirmation").dialog({
-            width: 400
-            , dialogClass: "NoCloseButton"
-            , autoOpen: false
-            , draggable: false
-            , height: 400
-            , collapsable: false
-            , resizable: false
-        });
-
-    },
-
-    updateAddressHeaderInfo: function (fullAddress, addressId) {
-        $("#lblHeaderAddressInfo").text(fullAddress);
-
-        if (currentlySelectedPermit != null) {
-            currentlySelectedPermit.PropertyAddress.Id = addressId;
-        }
     }
 };

@@ -13,14 +13,7 @@
     <!-- site styles, overriding above -->
     <link rel="stylesheet" href="css/site.css" />
     <!--<link rel="stylesheet" href="js/OrthoButton/css/OrthoButton.css" />-->
-
-    <!-- DATATABLES stuff -->
-    <script src="js/DataTables-1.9.4/js/jquery.dataTables.js"></script>
-    <style>
-        @import "js/DataTables-1.9.4/css/demo_table.css";
-        @import "js/DataTables-1.9.4/css/demo_page.css";
-    </style>
-
+    
     <!-- ESRI Mapping Stuff -->
     <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css" />
 
@@ -45,10 +38,8 @@
     <script src="js/ListController.js"></script>
 
     <script>
-        var gridStreets;
-        var gridAddresses;
-
         var searchService = "http://hubmaps1.cityofboston.gov/samrest/api/search?text={0}&callback=?";
+        var searchServiceBuilding = "http://hubmaps1.cityofboston.gov/samrest/api/address/?constrid={0}&callback=?";
 
         dojo.require("esri.map");
         dojo.require("esri.layers.ArcGISTiledMapServiceLayer");
@@ -98,26 +89,6 @@
             })(window.location.search.substr(1).split('&'))
         })(jQuery);
 
-        $(document).ready(function () {
-
-            gridStreets = $("#dgStreets").dataTable({
-                bJQueryUI: true
-                , aoColumns: [
-                    { mData: "streetName" }
-                    , { mData: "streetId" }
-                ]
-            });
-
-            gridAddresses = $("#dgAddresses").dataTable({
-                bJQueryUI: true
-                , aoColumns: [
-                    { mData: "addressId" },
-                    { mData: "fullAddress" },
-                    { mData: "mailingNeighborhood" },
-                    { mData: "zipCode" }
-                ]
-            });
-        });
 
         function init() {
             esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer");
@@ -150,42 +121,8 @@
 
 
         <div id="resultDiv">
-            <div id="tabMain">
-                <ul>
-                    <li><a href="#tabsAddress" id="txtAddressTabTitle">Addresses</a></li>
-                    <li><a href="#tabsStreet" id="txtStreetTabTitle">Streets</a></li>
-                </ul>
-                <div id="tabsAddress">
-                    <table id="dgAddresses">
-                        <thead>
-                            <tr>
-                                <th>Address Id</th>
-                                <th>Full Address</th>
-                                <th>Mailing Neighborhood</th>
-                                <th>Zip Code</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-                <div id="tabsStreet">
-                    <table id="dgStreets">
-                        <thead>
-                            <tr>
-                                <th>Street Name</th>
-                                <th>Street Id</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
         </div>
     </div>
-
-    <div id="dlgConfirmation">
-        TODO: Confirm address here
-    </div>
-
+    
 </body>
 </html>
