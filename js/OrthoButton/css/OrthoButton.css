@@ -1,0 +1,37 @@
+.OrthoButton span {
+    display:none;
+}
+
+.OrthoButton .ortho {
+    padding:2px;
+    width:30px;
+    height:30px;
+    background-color: #666;
+    background-color: rgba(102,102,102,0.80);
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    cursor:pointer;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    -o-border-radius:5px;
+    border-radius:5px;
+    background-image:url(../images/ortho.png);
+    background-position:center center;
+    background-repeat:no-repeat;
+}
+
+.OrthoButton .ortho:hover {
+    background-color: #333;
+    background-color: rgba(102,102,102,0.90);
+}
+
+.OrthoButton .ortho:active {
+    background-color: #ccc;
+    background-color: rgba(102,102,102,0.60);
+}
+
+.OrthoButton .loading {
+    background-image:url(../images/ortho-spinner.gif);
+}

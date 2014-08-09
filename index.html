@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <title>LRS Permitting</title>
+
+    <!-- JQUERY Stuff -->
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <link rel="stylesheet" href="js/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" />
+
+    <!-- site styles, overriding above -->
+    <link rel="stylesheet" href="Content/site.css" />
+    <link rel="stylesheet" href="js/OrthoButton/css/OrthoButton.css" />
+
+    <script src="js/date.js"></script>
+
+    <!-- DATATABLES stuff -->
+    <script src="js/DataTables-1.9.4/js/jquery.dataTables.js"></script>
+    <style>
+        @import "js/DataTables-1.9.4/css/demo_table.css";
+        @import "js/DataTables-1.9.4/css/demo_page.css";
+    </style>
+
+    <!-- ESRI Mapping Stuff
+    <link rel="stylesheet" href="http://js.arcgis.com/3.7/js/esri/css/esri.css" />-->
+    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css" />
+
+    <script>
+        var dojoConfig = {
+            packages: [{
+                name: "orthobutton",
+                location: '/js/OrthoButton/js'
+            },
+            {
+                name: "myModules",
+                location: "/js/myModules"
+            }]
+        };
+    </script>
+    <!--<script src="http://js.arcgis.com/3.7/"></script>-->
+    <script src="http://js.arcgis.com/3.9/"></script>
+
+    <script src="js/UIController.js"></script>
+    <script src="js/MapController.js"></script>
+    <script src="js/SearchController.js"></script>
+
+    <script>
+        var gridStreets;
+        var gridAddresses;
+
+        //var searchService = "http://localhost:63024/api/search?text={0}&callback=?";
+        var searchService = "http://hubmaps1.cityofboston.gov/samrest/api/search?text={0}&callback=?";
+        var addressService = "http://localhost:63024/api/address?id={0}&callback=?";
+
+        dojo.require("esri.map");
+        dojo.require("esri.layers.ArcGISTiledMapServiceLayer");
+        dojo.require("esri.layers.ArcGISDynamicMapServiceLayer");
+        dojo.require("esri.layers.FeatureLayer");
+        dojo.require("esri.layers.GraphicsLayer");
+        dojo.require("esri.tasks.query");
+        dojo.require("esri.tasks.route");
+        dojo.require("esri.tasks.QueryTask");
+        dojo.require("esri.tasks.geometry");
+        dojo.require("esri.toolbars.draw");
+        dojo.require("esri.graphic");
+        dojo.require("esri.geometry.mathUtils");
+        dojo.require("esri.geometry.ScreenPoint");
+        dojo.require("esri.geometry.Geometry");
+        dojo.require("esri.geometry.Point");
+        dojo.require("esri.geometry.Polyline");
+        dojo.require("esri.symbols.SimpleLineSymbol");
+        dojo.require("esri.symbols.SimpleMarkerSymbol");
+        dojo.require("esri.geometry.Extent");
+        dojo.require("esri.SnappingManager");
+        dojo.require("esri.InfoTemplate");
+        dojo.require("esri.undoManager");
+        dojo.require("dojo._base.connect");
+        dojo.require("dojo._base.Color");
+        dojo.require("esri.dijit.HomeButton");
+        dojo.require("orthobutton.OrthoButton");
+        dojo.require("myModules.customoperation");
+        dojo.require("dojo.domReady!");
+
+        //esriConfig.defaults.io.proxyUrl = "http://localhost:62617/proxy.ashx";
+        //esriConfig.defaults.io.alwaysUseProxy = true;
+
+        /*esri.addProxyRule({
+            urlPrefix: "http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer",
+            proxyUrl: "http://localhost:62617/proxy.ashx"
+        });*/
+
+        (function ($) {
+            $.QueryString = (function (a) {
+                if (a == "") return {};
+                var b = {};
+                for (var i = 0; i < a.length; ++i) {
+                    var p = a[i].split('=');
+                    if (p.length != 2) continue;
+                    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                }
+                return b;
+            })(window.location.search.substr(1).split('&'))
+        })(jQuery);
+
+        $(document).ready(function () {
+
+            gridStreets = $("#dgStreets").dataTable({
+                bJQueryUI: true
+                , aoColumns: [
+                    { mData: "streetName" }
+                    , { mData: "streetId" }
+                ]
+            });
+
+            gridAddresses = $("#dgAddresses").dataTable({
+                bJQueryUI: true
+                , aoColumns: [
+                    { mData: "fullAddress" },
+                    { mData: "mailingNeighborhood" },
+                    { mData: "zipCode" }
+                ]
+            });
+
+        });
+
+
+        function init() {
+            esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer");
+            UIController.init();
+            MapController.init();
+            SearchController.init();
+
+            //on page load display all the permits to the map based on the current permits from / to dates +/- 2 days.
+            /*PermitController.getAllPermits(function (data) {
+
+                $.each(data, function (index, element) {
+                    MapController.zoomAndCenterToPermit(element, false, true, false);
+                });
+
+            });*/
+        }
+        dojo.ready(init);
+
+        //loads jquery ui elements
+        $(function () {
+            console.log('index.html > init()');
+        });
+    </script>
+</head>
+<body>
+    <div id="fullPageDiv">
+        <div id="headerDiv">
+            <div id="topLeftInfoBox" class="itemInfoBox">
+            </div>
+            <div id="addressSearch" class="item">Address</div>
+        </div>
+        <div id="mapDiv">
+            <div id="HomeButton"></div>
+            <div id="OrthoButton"></div>
+        </div>
+    </div>
+
+    <div id="dlgSearch">
+        <input type="text" id="txtSearch" />
+        <button id="btnSearch">Search</button>
+        <img id="imgLoadingSpinner" src="Content/ajax-loader.gif" />
+        <br />
+
+        <div id="tabMain">
+          <ul>
+            <li><a href="#tabsAddress" id="txtAddressTabTitle">Addresses</a></li>
+            <li><a href="#tabsStreet" id="txtStreetTabTitle">Streets</a></li>
+          </ul>
+          <div id="tabsAddress">
+              <table id="dgAddresses">
+                  <thead>
+                      <tr>
+                        <th>Full Address</th>
+                        <th>Mailing Neighborhood</th>
+                        <th>Zip Code</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+              </table>
+          </div>
+          <div id="tabsStreet">
+            <table id="dgStreets">
+                <thead>
+                    <tr>
+                        <th>Street Name</th>
+                        <th>Street Id</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+
+    <div id="dlgLoading">
+    </div>
+
+</body>
+</html>

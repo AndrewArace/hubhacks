@@ -1,0 +1,135 @@
+﻿html, body, #mapDiv, #fullPageDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    font-family: Arial;
+}
+
+#dgAddresses, #dgStreets {
+    width: 100%;
+    height: 100%;
+}
+
+/* hide dialogs */
+#dlgSearch, #dlgSketching, #dlgSketchingCaddy, #dlgPermits {
+    display:none;
+}
+
+#txtLocationDescription {
+    width: 95%;
+    height: 80px;
+}
+
+
+
+/* Map Buttons*/
+
+#HomeButton {
+    position: absolute;
+    top: 145px;
+    left: 20px;
+    z-index: 50;
+}
+
+#OrthoButton {
+    position: absolute;
+    top: 185px;
+    left: 20px;
+    z-index: 50;
+}
+
+
+/* Main Titlebar */
+#headerDiv {
+    width: 100%;
+    height: 50px;
+    background: #337697;
+}
+
+    #headerDiv .saveButton {
+        float: right;
+    }
+
+    #headerDiv .item {
+        float: right;
+        height: 48px;
+        line-height: 48px;
+        width: 80px;
+        border: 1px solid silver;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+        color: #FFFFFF;
+        cursor: pointer;
+    }
+
+    #headerDiv .itemHover {
+        background: #ABCDDD;
+        color: #111111;
+    }
+
+    #headerDiv .itemActive {
+        background: #ABCDDD;
+        color: #111111;
+    }
+
+    #headerDiv .itemInfoBox {
+        position: absolute;
+        left: 10px;
+        top: 0px;
+    }
+        #headerDiv .itemInfoBox .title {
+            font-weight:bold;
+            margin-right:10px;
+        }
+
+    #headerDiv a {
+        color: #FFFFFF;
+    }
+
+/*jqueryui overrides*/
+/*
+ui-dialog: The outer container of the dialog.
+ui-dialog-titlebar: The title bar containing the dialog's title and close button.
+ui-dialog-title: The container around the textual title of the dialog.
+ui-dialog-titlebar-close: The dialog's close button.
+ui-dialog-content: The container around the dialog's content. This is also the element the widget was instantiated with.
+ui-dialog-buttonpane: The pane that contains the dialog's buttons. This will only be present if the buttons option is set.
+ui-dialog-buttonset: The container around the buttons themselves.
+*/
+
+.ui-dialog .ui-dialog-titlebar {
+    padding: 0px;
+    position: relative;
+}
+.ui-dialog .ui-dialog-content {
+    padding: .2em .3em;
+}
+
+.NoCloseButton .ui-dialog-titlebar-close {
+    display: none;
+}
+
+.ui-widget-content {
+    border: 1px solid #dddddd;
+    background-image: linear-gradient(to top, #367898 0%, #B4D3E2 100%);
+    color: #333333;
+}
+
+.ui-widget-header {
+    border: 0px;
+    background: #B4D3E2;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.ui-tabs .ui-tabs-panel {
+	display: block;
+	border-width: 0;
+	padding: 0px;
+	background: none;
+}
+
+.ui-button-text-only .ui-button-text {
+    padding: .2em .2em;
+}
