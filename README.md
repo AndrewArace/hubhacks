@@ -9,6 +9,7 @@ http://hubmaps1.cityofboston.gov/samrest/
 
 Example JSON Address
 -----
+```
 {
 	"addressId":1234,"fullAddress":"21 Ainsworth St",
 	"xCoord":753634.177065596,
@@ -32,3 +33,5 @@ Example JSON Address
 	"wardId":20,
 	"precinct":"2007"
 }
+```
+
