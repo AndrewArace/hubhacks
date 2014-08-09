@@ -28,11 +28,17 @@ var MapController = {
         //address info template
         this.infoAddress = new esri.InfoTemplate("Address ${addressId}", "Address: ${fullAddress}<br>" +
             "Neighborhood: ${mailingNeighborhood}, ${zipCode}<br>"
+            + "Parcel ID: ${spatialParcelPID}<br>"
             + "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal'>Confirm Location</button>"
             + "");
 
         //map and layers
-        map = new esri.Map("mapDiv");
+        
+        var defaultExtent = new esri.geometry.Extent({ xmin: 758267.6416778979, ymin: 2949455.6614452596, xmax: 791305.8361223424, ymax: 2961122.3281119266, spatialReference: { wkid: 2249 } });
+        map = new esri.Map("mapDiv", {
+            extent: defaultExtent
+        });
+
         var baselayer = new esri.layers.ArcGISTiledMapServiceLayer("http://maps.cityofboston.gov/ArcGIS/rest/services/SAM/maint_tool/MapServer");
         map.addLayer(baselayer);
 
@@ -47,8 +53,13 @@ var MapController = {
         map.addLayer(this.glBuildingHighlight);
 
         dojo.connect(map, "onClick", this.handleMapClick);
+        //dojo.connect(map, "onExtentChange", function (et) {
+        //    console.log(et.toJson());
+        //});
 
         dojo.connect(this.glAddressHighlight, "onClick", this.handleAddressPointClick);
+        dojo.connect(this.glAddressHighlight, "onMouseOver", function () { map.setMapCursor("pointer"); });
+        dojo.connect(this.glAddressHighlight, "onMouseOut", function () { map.setMapCursor("default"); });
 
 
 
