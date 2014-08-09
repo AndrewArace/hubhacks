@@ -94,6 +94,7 @@ var MapController = {
                 j.addressId = f.attributes.BUILDING_ID;
                 j.fullAddress = f.attributes.FULL_ADDRESS;
                 j.zipCode = f.attributes.ZIP_CODE;
+                j.mailingNeighborhood = f.attributes.MAILING_NEIGHBORHOOD;
                 j.spatialParcelPID = f.attributes.PARCEL;
                 j.xCoord = f.attributes.X_COORD;
                 j.yCoord = f.attributes.Y_COORD;
@@ -131,7 +132,6 @@ var MapController = {
 
         })
         queryTask.execute(query);
-
 
     },
 
@@ -214,6 +214,7 @@ var MapController = {
         }
     },
 
+
     //draw functions
     drawStreetPolyline: function (feature, bDrawOnMap, bClearMap) {
         if (bDrawOnMap) {
@@ -233,6 +234,7 @@ var MapController = {
         $.each(addresses, function (index, value) {
             MapController.drawAddress(value);
         });
+
         if (addresses.length > 0) {
             var ext = esri.graphicsExtent(MapController.glAddressHighlight.graphics);
             ext.spatialReference = map.spatialReference;
@@ -260,7 +262,7 @@ var MapController = {
 
     highlightAddress: function (addressObject) {
         var pt = new esri.geometry.Point(addressObject.xCoord, addressObject.yCoord);
-        var g = new esri.Graphic(pt, MapController.symAddress, address, this.infoAddress);
+        var g = new esri.Graphic(pt, MapController.symAddress, addressObject, this.infoAddress);
         MapController.drawPoint(g);
         map.infoWindow.setTitle(g.getTitle());
         map.infoWindow.setContent(g.getContent());
@@ -272,7 +274,6 @@ var MapController = {
         feature.setSymbol(MapController.symAddress);
         MapController.glAddressHighlight.add(feature);
     },
-
 
     //query functions
     handleStreetQueryError: function (err) {

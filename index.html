@@ -1,34 +1,35 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
-    <title>Hubhacks Address Search</title>
 
-    <!-- JQUERY Stuff -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Where's My Address</title>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="js/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" />
 
     <!-- site styles, overriding above -->
     <link rel="stylesheet" href="css/site.css" />
-    <!--<link rel="stylesheet" href="js/OrthoButton/css/OrthoButton.css" />-->
-    
+    <link href="css/style.css" rel="stylesheet">
+
     <!-- ESRI Mapping Stuff -->
     <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css" />
 
-    <!--<script>
-        var dojoConfig = {
-            packages: [{
-                name: "orthobutton",
-                location: '/js/OrthoButton/js'
-            },
-            {
-                name: "myModules",
-                location: "/js/myModules"
-            }]
-        };
-    </script>-->
+    <!-- D3 Stuff -->
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 
     <script src="http://js.arcgis.com/3.10/"></script>
 
@@ -38,6 +39,7 @@
     <script src="js/ListController.js"></script>
 
     <script>
+
         var searchService = "http://hubmaps1.cityofboston.gov/samrest/api/search?text={0}&callback=?";
         var searchServiceBuilding = "http://hubmaps1.cityofboston.gov/samrest/api/address/?constrid={0}&callback=?";
 
@@ -63,18 +65,7 @@
         dojo.require("esri.InfoTemplate");
         dojo.require("dojo._base.connect");
         dojo.require("dojo._base.Color");
-        //dojo.require("esri.dijit.HomeButton");
-        //dojo.require("orthobutton.OrthoButton");
-        //dojo.require("myModules.customoperation");
         dojo.require("dojo.domReady!");
-
-        //esriConfig.defaults.io.proxyUrl = "http://localhost:62617/proxy.ashx";
-        //esriConfig.defaults.io.alwaysUseProxy = true;
-
-        /*esri.addProxyRule({
-            urlPrefix: "http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer",
-            proxyUrl: "http://localhost:62617/proxy.ashx"
-        });*/
 
         (function ($) {
             $.QueryString = (function (a) {
@@ -88,7 +79,6 @@
                 return b;
             })(window.location.search.substr(1).split('&'))
         })(jQuery);
-
 
         function init() {
             esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer");
@@ -105,24 +95,80 @@
             console.log('index.html > init()');
         });
     </script>
+
 </head>
+
 <body>
-    <div id="fullPageDiv">
-        <div id="searchDiv">
-            <input type="text" id="txtSearch" />
-            <button id="btnSearch">Search</button>
-            <img id="imgLoadingSpinner" src="images/ajax-loader.gif" />
+
+    <!--top bar-->
+    <div class="topheader">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h1>Where's My Address?</h1>
+            </div>
         </div>
-            
-            <div id="mapDiv">
-<!--                <div id="HomeButton"></div>
-                <div id="OrthoButton"></div>-->
+    </div><!--close topheader-->
+    <!--search-->
+    <div class="search">
+        <div class="row">
+            <!-- search bar-->
+            <div class="col-md-8">
+                <input type="text" id="txtSearch" class="form-control" placeholder="Enter your Address">
+                <img id="imgLoadingSpinner" src="images/ajax-loader.gif" />
             </div>
 
+            <!--search button-->
+            <div class="col-md-4"><button type="button" id="btnSearch" class="btn btn-default">Search</button></div>
 
-        <div id="resultDiv">
+        </div><!--close row-->
+
+    </div><!--close search-->
+    <!--main page area-->
+    <div class="page-wrapper">
+        <div class="row">
+
+            <!--left results bar-->
+            <div class="sidebar">
+                <div class="col-md-4">
+                    <table class="result-table"></table>
+                </div><!-- columnmd7 div-->
+            </div><!--sidebar div-->
+            <!--map section-->
+            <div class="mapside">
+                <div class="col-md-8" id="mapDiv"></div>
+            </div>
+
+        </div><!--close row-->
+    </div><!--close page wrapper-->
+    <!-- http://getbootstrap.com/javascript/ -->
+    <!-- Button trigger modal -->
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Confirm Location
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Location</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="confirmation-address-id"></p>
+                    <p class="confirmation-full-address"></p>
+                    <p class="confirmation-mailing-neighborhood"></p>
+                    <p class="confirmation-zip-code"></p>
+                    <p class="confirmation-spatial-parcel-pid"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                </div>
+
+            </div>
         </div>
     </div>
-    
 </body>
+
 </html>

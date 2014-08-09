@@ -12,6 +12,7 @@ var SearchController = {
 
         $("#btnSearch").button().click(function (event) {
 
+            MapController.clearMap();
             var searchString = $("#txtSearch").val();
 
             if (searchString == "" || searchString == null) {
@@ -53,11 +54,8 @@ var SearchController = {
         $.getJSON(url, function (data) {
             $("#tabMain").show("fold");
 
-            var streetLength = 0;
-
             if (!data)
                 return;
-
             ListController.setResults(data.addressResults);
             MapController.setResults(data.addressResults);
 
