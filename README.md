@@ -11,7 +11,8 @@ Example JSON Address
 -----
 ```
 {
-	"addressId":1234,"fullAddress":"21 Ainsworth St",
+	"addressId":1234,
+	"fullAddress":"21 Ainsworth St",
 	"xCoord":753634.177065596,
 	"yCoord":2930402.91973303,
 	"mailingNeighborhood":"Roslindale",
