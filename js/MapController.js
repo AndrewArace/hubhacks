@@ -61,8 +61,6 @@ var MapController = {
         dojo.connect(this.glAddressHighlight, "onMouseOver", function () { map.setMapCursor("pointer"); });
         dojo.connect(this.glAddressHighlight, "onMouseOut", function () { map.setMapCursor("default"); });
 
-
-
         //map dijits
         var geoLocate = new esri.dijit.LocateButton({
             map: map
