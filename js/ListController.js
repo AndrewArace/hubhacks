@@ -29,7 +29,7 @@ var ListController = {
         d3.select(".table").html(s);
 
         d3.selectAll("tbody tr").data(addresses).on("mouseover", function(){
-            d3.select(this).style("background-color", "green");
+            d3.select(this).style("background-color", "green").style("cursor", "pointer");
         }).on("mouseout", function(){
             d3.select(this).style("background-color", "white");
         }).on("click", function(d){
