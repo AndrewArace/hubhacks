@@ -10,7 +10,7 @@
     },
 
 
-    highlighAddress: function (addressId) {
+    highlightAddress: function (addressObject) {
         //TODO: find the result with this addressId, and highlight it
     },
 

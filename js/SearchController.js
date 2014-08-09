@@ -58,11 +58,8 @@ var SearchController = {
             if (data.addressResults != null) {
                 gridAddresses.fnAddData(data.addressResults, true);
                 addressLength = data.addressResults.length;
-
-                MapController.clearMap();
-                $.each(data.addressResults, function (index, value) {
-                    MapController.drawAddress(value);
-                });
+                ListController.setResults(data.addressResults);
+                MapController.setResults(data.addressResults);
             }
 
             var addrString = "Addresses ({0})".replace("{0}", addressLength);

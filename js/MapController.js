@@ -43,6 +43,8 @@ var MapController = {
 
         dojo.connect(map, "onClick", this.handleMapClick);
 
+        dojo.connect(this.glAddressHighlight, "onClick", this.handleAddressPointClick);
+
         //map dijits
         /*
         var home = new esri.dijit.HomeButton({
@@ -61,10 +63,17 @@ var MapController = {
 
 
     //map click
-    handleMapClick: function(evt) {
+    handleMapClick: function (evt) {
 
     },
 
+
+    handleAddressPointClick: function (clickedPoint) {
+        if (clickedPoint && clickedPoint.graphic && clickedPoint.graphic.attributes) {
+            console.log("highlight " + clickedPoint.graphic.attributes.addressId);
+            ListController.highlightAddress(clickedPoint.graphic.attributes);
+        }
+    },
 
     //zoom functions
     zoomAndCenterToXY: function (xCoord, yCoord, bZoomIn) {
@@ -145,9 +154,36 @@ var MapController = {
     },
 
 
-    clearMap : function() {
+    setResults: function (addresses) {
+        MapController.clearMap();
+        $.each(addresses, function (index, value) {
+            MapController.drawAddress(value);
+        });
+    },
+
+
+    clearMap: function () {
         MapController.glAddressHighlight.clear();
         MapController.glStreetHighlight.clear();
+        map.infoWindow.hide();
+    },
+
+
+    drawAddress: function (address) {
+        var pt = new esri.geometry.Point(address.xCoord, address.yCoord);
+        var g = new esri.Graphic(pt, MapController.symAddress, address, this.infoAddress);
+
+        MapController.drawPoint(g);
+    },
+
+
+    highlightAddress: function (addressObject) {
+        var pt = new esri.geometry.Point(addressObject.xCoord, addressObject.yCoord);
+        var g = new esri.Graphic(pt, MapController.symAddress, address, this.infoAddress);
+        MapController.drawPoint(g);
+        map.infoWindow.setTitle(g.getTitle());
+        map.infoWindow.setContent(g.getContent());
+        map.infoWindow.show(pt);
     },
 
 
@@ -156,13 +192,6 @@ var MapController = {
         MapController.glAddressHighlight.add(feature);
     },
 
-
-    drawAddress : function(address) {
-        var pt = new esri.geometry.Point(address.xCoord, address.yCoord);
-        var g = new esri.Graphic(pt, MapController.symAddress, address, this.infoAddress);
-        
-        MapController.drawPoint(g);
-    },
 
     //query functions
     handleStreetQueryError: function (err) {

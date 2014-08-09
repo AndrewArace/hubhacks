@@ -22,7 +22,7 @@
     </style>
 
     <!-- ESRI Mapping Stuff -->
-    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css" />
+    <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css" />
 
     <!--<script>
         var dojoConfig = {
@@ -37,7 +37,7 @@
         };
     </script>-->
 
-    <script src="http://js.arcgis.com/3.9/"></script>
+    <script src="http://js.arcgis.com/3.10/"></script>
 
     <script src="js/UIController.js"></script>
     <script src="js/MapController.js"></script>
@@ -111,13 +111,13 @@
             gridAddresses = $("#dgAddresses").dataTable({
                 bJQueryUI: true
                 , aoColumns: [
+                    { mData: "addressId" },
                     { mData: "fullAddress" },
                     { mData: "mailingNeighborhood" },
                     { mData: "zipCode" }
                 ]
             });
         });
-
 
         function init() {
             esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer");
@@ -142,43 +142,43 @@
             <button id="btnSearch">Search</button>
             <img id="imgLoadingSpinner" src="images/ajax-loader.gif" />
         </div>
-        <div>
-            <div id="resultDiv">
-                <div id="tabMain">
-                    <ul>
-                        <li><a href="#tabsAddress" id="txtAddressTabTitle">Addresses</a></li>
-                        <li><a href="#tabsStreet" id="txtStreetTabTitle">Streets</a></li>
-                    </ul>
-                    <div id="tabsAddress">
-                        <table id="dgAddresses">
-                            <thead>
-                                <tr>
-                                    <th>Full Address</th>
-                                    <th>Mailing Neighborhood</th>
-                                    <th>Zip Code</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="tabsStreet">
-                        <table id="dgStreets">
-                            <thead>
-                                <tr>
-                                    <th>Street Name</th>
-                                    <th>Street Id</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            
             <div id="mapDiv">
 <!--                <div id="HomeButton"></div>
                 <div id="OrthoButton"></div>-->
+            </div>
+
+
+        <div id="resultDiv">
+            <div id="tabMain">
+                <ul>
+                    <li><a href="#tabsAddress" id="txtAddressTabTitle">Addresses</a></li>
+                    <li><a href="#tabsStreet" id="txtStreetTabTitle">Streets</a></li>
+                </ul>
+                <div id="tabsAddress">
+                    <table id="dgAddresses">
+                        <thead>
+                            <tr>
+                                <th>Address Id</th>
+                                <th>Full Address</th>
+                                <th>Mailing Neighborhood</th>
+                                <th>Zip Code</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="tabsStreet">
+                    <table id="dgStreets">
+                        <thead>
+                            <tr>
+                                <th>Street Name</th>
+                                <th>Street Id</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
