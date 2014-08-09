@@ -12,18 +12,7 @@ var SearchController = {
 
         $("#btnSearch").button().click(function (event) {
 
-            //temp testing
-            var obj = {"segmentId":1,"segmentFrom":1.0,"segmentTo":2.0,"permitId":"73f892da-ee9c-4c1a-8aa2-25cc7ad018de"}
-            $.ajax({
-                type: "POST",
-                url: "/api/samsegment",
-                data: obj,
-                dataType: "json",
-                traditional: true
-            });
-
-            gridStreets.fnClearTable();
-            gridAddresses.fnClearTable();
+            MapController.clearMap();
 
             var searchString = $("#txtSearch").val();
 
@@ -51,46 +40,48 @@ var SearchController = {
         $.getJSON(url, function (data) {
             $("#tabMain").show("fold");
 
-            var streetLength = 0;
-            var addressLength = 0;
+            // var streetLength = 0;
+            // var addressLength = 0;
 
             if (!data)
                 return;
 
-            if (data.streetResults != null) {
-                gridStreets.fnAddData(data.streetResults, true);
-                streetLength = data.streetResults.length;
-            }
+            // if (data.streetResults != null) {
+            //     gridStreets.fnAddData(data.streetResults, true);
+            //     streetLength = data.streetResults.length;
+            // }
 
-            var strString = "Streets ({0})".replace("{0}", streetLength);
-            $("#txtStreetTabTitle").text(strString);
+            // var strString = "Streets ({0})".replace("{0}", streetLength);
+            // $("#txtStreetTabTitle").text(strString);
 
             if (data.addressResults != null) {
-                gridAddresses.fnAddData(data.addressResults, true);
-                addressLength = data.addressResults.length;
+                // gridAddresses.fnAddData(data.addressResults, true);
+                // addressLength = data.addressResults.length;
+                ListController.setResults(data.addressResults);
+                MapController.setResults(data.addressResults);
             }
 
-            var addrString = "Addresses ({0})".replace("{0}", addressLength);
-            $("#txtAddressTabTitle").text(addrString);
+            // var addrString = "Addresses ({0})".replace("{0}", addressLength);
+            // $("#txtAddressTabTitle").text(addrString);
 
-            //have to re add the click events every time the search results are repopulated.
-            $("#dgAddresses tbody tr").click(function (event) {
-                UIController.rowHighlight($(this), gridAddresses);
+            // //have to re add the click events every time the search results are repopulated.
+            // $("#dgAddresses tbody tr").click(function (event) {
+            //     UIController.rowHighlight($(this), gridAddresses);
 
-                var selectedItem = gridAddresses.fnGetData(this);
-                if (selectedItem != null) {
-                    MapController.zoomAndCenterToAddress(selectedItem, true, true, true);
-                }
-            });
+            //     var selectedItem = gridAddresses.fnGetData(this);
+            //     if (selectedItem != null) {
+            //         MapController.zoomAndCenterToAddress(selectedItem, true, true, true);
+            //     }
+            // });
 
-            $("#dgStreets tbody tr").click(function (event) {
-                UIController.rowHighlight($(this), gridStreets);
+            // $("#dgStreets tbody tr").click(function (event) {
+            //     UIController.rowHighlight($(this), gridStreets);
 
-                var selectedItem = gridStreets.fnGetData(this);
-                if (selectedItem != null) {
-                    MapController.zoomAndCenterToStreet(selectedItem, true, true, true);
-                }
-            });
+            //     var selectedItem = gridStreets.fnGetData(this);
+            //     if (selectedItem != null) {
+            //         MapController.zoomAndCenterToStreet(selectedItem, true, true, true);
+            //     }
+            // });
 
         }).always(function () {
             $("#txtSearch").prop("disabled", false);
