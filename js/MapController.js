@@ -27,7 +27,8 @@ var MapController = {
 
         //address info template
         this.infoAddress = new esri.InfoTemplate("Address ${addressId}", "Address: ${fullAddress}<br>" +
-            "Neighborhood: ${mailingNeighborhood}, ${zipCode}<br>" +
+            "Neighborhood: ${mailingNeighborhood}, ${zipCode}<br>"
+            + "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal'>Confirm Location</button>"
             + "");
 
         //map and layers
