@@ -179,7 +179,7 @@ var MapController = {
 
     highlightAddress: function (addressObject) {
         var pt = new esri.geometry.Point(addressObject.xCoord, addressObject.yCoord);
-        var g = new esri.Graphic(pt, MapController.symAddress, address, this.infoAddress);
+        var g = new esri.Graphic(pt, MapController.symAddress, addressObject, this.infoAddress);
         MapController.drawPoint(g);
         map.infoWindow.setTitle(g.getTitle());
         map.infoWindow.setContent(g.getContent());

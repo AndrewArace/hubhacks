@@ -33,13 +33,15 @@ var ListController = {
         }).on("mouseout", function(){
             d3.select(this).style("background-color", "white");
         }).on("click", function(d){
-            highlightAddress(d);
+            ListController.highlightAddress(d);
+            MapController.highlightAddress(d);
         });
     },
 
 
     highlightAddress: function (addressObject) {
         //TODO: find the result with this addressId, and highlight it
+        console.log("Highlight address!");
     },
 
 
