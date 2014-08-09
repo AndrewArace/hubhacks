@@ -18,7 +18,7 @@ var MapController = {
         this.glBuildingHighlight = new esri.layers.GraphicsLayer();
 
         //geometry service
-        this.geomService = new esri.tasks.GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");//http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer");
+        this.geomService = new esri.tasks.GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
 
         //symbology
         this.symStreet = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color("blue"), 3);
@@ -28,7 +28,7 @@ var MapController = {
         //address info template
         this.infoAddress = new esri.InfoTemplate("Address ${addressId}", "Address: ${fullAddress}<br>" +
             "Neighborhood: ${mailingNeighborhood}, ${zipCode}<br>" +
-            "");
+            + "");
 
         //map and layers
         map = new esri.Map("mapDiv");
@@ -49,7 +49,13 @@ var MapController = {
 
         dojo.connect(this.glAddressHighlight, "onClick", this.handleAddressPointClick);
 
+
+
         //map dijits
+        var geoLocate = new esri.dijit.LocateButton({
+            map: map
+        }, "LocateButton");
+        geoLocate.startup();
         /*
         var home = new esri.dijit.HomeButton({
             map: map
@@ -238,7 +244,14 @@ var MapController = {
         if (addresses.length > 0) {
             var ext = esri.graphicsExtent(MapController.glAddressHighlight.graphics);
             ext.spatialReference = map.spatialReference;
-            map.setExtent(ext, true);
+            if (ext.getWidth() > 0) {
+                map.setExtent(ext, true);
+            }
+            else {
+                var geo = MapController.glAddressHighlight.graphics[0].geometry;
+                geo.spatialReference = map.spatialReference;
+                map.centerAndZoom(MapController.glAddressHighlight.graphics[0].geometry, maxZoomLevel);
+            }
         }
     },
 
@@ -248,6 +261,7 @@ var MapController = {
         MapController.glStreetHighlight.clear();
         MapController.glBuildingHighlight.clear();
         MapController.glMapClickHighlight.clear();
+        map.graphics.clear();
         map.infoWindow.hide();
     },
 
@@ -262,11 +276,13 @@ var MapController = {
 
     highlightAddress: function (addressObject) {
         var pt = new esri.geometry.Point(addressObject.xCoord, addressObject.yCoord);
+        pt.spatialReference = map.spatialReference;
         var g = new esri.Graphic(pt, MapController.symAddress, addressObject, this.infoAddress);
         MapController.drawPoint(g);
         map.infoWindow.setTitle(g.getTitle());
         map.infoWindow.setContent(g.getContent());
         map.infoWindow.show(pt);
+        map.centerAndZoom(pt, maxZoomLevel);
     },
 
 

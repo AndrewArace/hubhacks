@@ -1,12 +1,15 @@
 ﻿html, body, #mapDiv, #fullPageDiv {
     padding: 0;
     margin: 0;
+    height:100%;
     font-family: Arial;
 }
 
-#mapDiv {
-    width:600px;
-    height:400px;
+#LocateButton {
+    position:absolute;
+    top:135px;
+    left:20px;
+    z-index:50;
 }
 
 /* hide dialogs */
@@ -14,35 +17,23 @@
     display:none;
 }
 
-
-/* Map Buttons
-#HomeButton {
-    position: relative;
-    top: 145px;
-    left: 20px;
-    z-index: 50;
+.search {
+    position: absolute;
+    top: 50px;
+    left: 60px;
+}
+.result-table {
+    background-color:#ffffff;
+    position:absolute;
+    top:120px;
+    left:70px;
 }
 
-#OrthoButton {
-    position: relative;
-    top: 185px;
-    left: 20px;
-    z-index: 50;
+#btnSearch, #txtSearch, #imgLoadingSpinner {
+    display:inline-block;
 }
-*/
-
 
 /*jqueryui overrides*/
-/*
-ui-dialog: The outer container of the dialog.
-ui-dialog-titlebar: The title bar containing the dialog's title and close button.
-ui-dialog-title: The container around the textual title of the dialog.
-ui-dialog-titlebar-close: The dialog's close button.
-ui-dialog-content: The container around the dialog's content. This is also the element the widget was instantiated with.
-ui-dialog-buttonpane: The pane that contains the dialog's buttons. This will only be present if the buttons option is set.
-ui-dialog-buttonset: The container around the buttons themselves.
-*/
-
 .ui-dialog .ui-dialog-titlebar {
     padding: 0px;
     position: relative;
@@ -77,4 +68,10 @@ ui-dialog-buttonset: The container around the buttons themselves.
 
 .ui-button-text-only .ui-button-text {
     padding: .2em .2em;
+}
+
+/*
+    ESRI override*/
+.esriPopup .actionsPane {
+    display:none;
 }

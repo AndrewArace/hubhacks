@@ -1,7 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,7 +38,6 @@
     <script src="js/ListController.js"></script>
 
     <script>
-
         var searchService = "http://hubmaps1.cityofboston.gov/samrest/api/search?text={0}&callback=?";
         var searchServiceBuilding = "http://hubmaps1.cityofboston.gov/samrest/api/address/?constrid={0}&callback=?";
 
@@ -63,6 +61,7 @@
         dojo.require("esri.geometry.Extent");
         dojo.require("esri.SnappingManager");
         dojo.require("esri.InfoTemplate");
+        dojo.require("esri.dijit.LocateButton");
         dojo.require("dojo._base.connect");
         dojo.require("dojo._base.Color");
         dojo.require("dojo.domReady!");
@@ -81,7 +80,7 @@
         })(jQuery);
 
         function init() {
-            esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer");
+            esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
             UIController.init();
             MapController.init();
             ListController.init();
@@ -99,52 +98,36 @@
 </head>
 
 <body>
-
-    <!--top bar-->
-    <div class="topheader">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h1>Where's My Address?</h1>
+    <div id="fullPageDiv">
+        <!--top bar-->
+        <div class="topheader">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h1>Where's My Address?</h1>
+                </div>
             </div>
+        </div><!--close topheader-->
+
+        <div id="mapDiv">
+            <div id="LocateButton"></div>
         </div>
-    </div><!--close topheader-->
-    <!--search-->
-    <div class="search">
-        <div class="row">
-            <!-- search bar-->
-            <div class="col-md-8">
-                <input type="text" id="txtSearch" class="form-control" placeholder="Enter your Address">
+
+        <button class="btn btn-primary btn-lg" style="position:absolute;right:10px;top:0px;" data-toggle="modal" data-target="#myModal">Confirm Location</button>
+
+        <!--search-->
+        <div class="search">
+            <div class="searchBar">
+                <!-- search bar-->
+                <input type="text" id="txtSearch" placeholder="Enter your Address">
+                <!--search button-->
+                <button type="button" id="btnSearch" class="btn btn-default">Search</button>
                 <img id="imgLoadingSpinner" src="images/ajax-loader.gif" />
-            </div>
+            </div><!--close row-->
 
-            <!--search button-->
-            <div class="col-md-4"><button type="button" id="btnSearch" class="btn btn-default">Search</button></div>
-
-        </div><!--close row-->
-
-    </div><!--close search-->
-    <!--main page area-->
-    <div class="page-wrapper">
-        <div class="row">
-
-            <!--left results bar-->
-            <div class="sidebar">
-                <div class="col-md-4">
-                    <table class="result-table"></table>
-                </div><!-- columnmd7 div-->
-            </div><!--sidebar div-->
-            <!--map section-->
-            <div class="mapside">
-                <div class="col-md-8" id="mapDiv"></div>
-            </div>
-
-        </div><!--close row-->
-    </div><!--close page wrapper-->
-    <!-- http://getbootstrap.com/javascript/ -->
-    <!-- Button trigger modal -->
-    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-        Confirm Location
-    </button>
+        </div><!--close search-->
+        <!--main page area-->
+        <table class="result-table"></table>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

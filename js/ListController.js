@@ -11,15 +11,16 @@
 
         var s = "";
 
-        s += "<thead><tr><th>#</th><th>Address</th><th>Neighborhood</th><th>Zip Code</th><th>Parcel</th><tr></thead><tbody>";
+        s += "<tbody>";
+        //s += "<thead><tr><th>Address</th><th>Neighborhood</th><th>Zip Code</th><th>Parcel</th><tr></thead><tbody>";
 
         addresses.forEach(function (addressEntry) {
             s += "<tr>";
-            s += "<td>" + addressEntry.addressId + "</td>";
-            s += "<td>" + addressEntry.fullAddress + "</td>";
-            s += "<td>" + addressEntry.mailingNeighborhood + "</td>";
-            s += "<td>" + addressEntry.zipCode + "</td>";
-            s += "<td>" + addressEntry.spatialParcelPID + "</td>";
+            s += "<td colspan='5'>" + addressEntry.fullAddress + ", " + addressEntry.mailingNeighborhood + ", " + addressEntry.zipCode + "</td>";
+            //s += "<td>" + addressEntry.fullAddress + "</td>";
+            //s += "<td>" + addressEntry.mailingNeighborhood + "</td>";
+            //s += "<td>" + addressEntry.zipCode + "</td>";
+            //s += "<td>" + addressEntry.spatialParcelPID + "</td>";
             s += "</tr>";
         });
 
@@ -35,7 +36,6 @@
             // Update data
             ListController.highlightAddress(d);
             MapController.highlightAddress(d);
-            d3.select(".confirmation-address-id").html("<p>" + d.addressId + "</p>");
             d3.select(".confirmation-full-address").html("<p>" + d.fullAddress + "</p>");
             d3.select(".confirmation-mailing-neighborhood").html("<p>" + d.mailingNeighborhood + "</p>");
             d3.select(".confirmation-zip-code").html("<p>" + d.zipCode + "</p>");
@@ -45,7 +45,7 @@
 
 
     highlightAddress: function (addressObject) {
-        console.log("Highlight address!");
+        
     },
 
     clear: function () {
