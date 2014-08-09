@@ -28,7 +28,6 @@ var MapController = {
         //address info template
         this.infoAddress = new esri.InfoTemplate("Location", "Full Address: ${fullAddress}<br>"+
             "Address Id: ${addressId}<br>"+
-            "<button id='btnMakePrimary' onclick='UIController.updateAddressHeaderInfo(\"${fullAddress}\", \"${addressId}\");'>MAKE PRIMARY</button>"+
             "");
 
         //map and layers
@@ -41,7 +40,6 @@ var MapController = {
         var ortholayer = new esri.layers.ArcGISTiledMapServiceLayer("http://hubmaps2.cityofboston.gov/ArcGIS/rest/services/image_services/ortho_2008_spf_tiled/MapServer");
         ortholayer.setVisibility(false);
         map.addLayer(ortholayer);
-
 
         //graphics layers
         map.addLayer(this.glStreetHighlight);

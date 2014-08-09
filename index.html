@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
-    <title>LRS Permitting</title>
+    <title>Hubhacks Address Search</title>
 
     <!-- JQUERY Stuff -->
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
@@ -11,10 +11,8 @@
     <link rel="stylesheet" href="js/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" />
 
     <!-- site styles, overriding above -->
-    <link rel="stylesheet" href="Content/site.css" />
+    <link rel="stylesheet" href="css/site.css" />
     <link rel="stylesheet" href="js/OrthoButton/css/OrthoButton.css" />
-
-    <script src="js/date.js"></script>
 
     <!-- DATATABLES stuff -->
     <script src="js/DataTables-1.9.4/js/jquery.dataTables.js"></script>
@@ -23,8 +21,7 @@
         @import "js/DataTables-1.9.4/css/demo_page.css";
     </style>
 
-    <!-- ESRI Mapping Stuff
-    <link rel="stylesheet" href="http://js.arcgis.com/3.7/js/esri/css/esri.css" />-->
+    <!-- ESRI Mapping Stuff -->
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css" />
 
     <script>
@@ -39,7 +36,7 @@
             }]
         };
     </script>
-    <!--<script src="http://js.arcgis.com/3.7/"></script>-->
+
     <script src="http://js.arcgis.com/3.9/"></script>
 
     <script src="js/UIController.js"></script>
@@ -50,9 +47,7 @@
         var gridStreets;
         var gridAddresses;
 
-        //var searchService = "http://localhost:63024/api/search?text={0}&callback=?";
         var searchService = "http://hubmaps1.cityofboston.gov/samrest/api/search?text={0}&callback=?";
-        var addressService = "http://localhost:63024/api/address?id={0}&callback=?";
 
         dojo.require("esri.map");
         dojo.require("esri.layers.ArcGISTiledMapServiceLayer");
@@ -63,7 +58,6 @@
         dojo.require("esri.tasks.route");
         dojo.require("esri.tasks.QueryTask");
         dojo.require("esri.tasks.geometry");
-        dojo.require("esri.toolbars.draw");
         dojo.require("esri.graphic");
         dojo.require("esri.geometry.mathUtils");
         dojo.require("esri.geometry.ScreenPoint");
@@ -75,7 +69,6 @@
         dojo.require("esri.geometry.Extent");
         dojo.require("esri.SnappingManager");
         dojo.require("esri.InfoTemplate");
-        dojo.require("esri.undoManager");
         dojo.require("dojo._base.connect");
         dojo.require("dojo._base.Color");
         dojo.require("esri.dijit.HomeButton");
@@ -122,7 +115,6 @@
                     { mData: "zipCode" }
                 ]
             });
-
         });
 
 
@@ -151,57 +143,54 @@
 </head>
 <body>
     <div id="fullPageDiv">
-        <div id="headerDiv">
-            <div id="topLeftInfoBox" class="itemInfoBox">
+        <div id="searchDiv">
+            <input type="text" id="txtSearch" />
+            <button id="btnSearch">Search</button>
+            <img id="imgLoadingSpinner" src="images/ajax-loader.gif" />
+        </div>
+        <div>
+            <div id="resultDiv">
+                <div id="tabMain">
+                    <ul>
+                        <li><a href="#tabsAddress" id="txtAddressTabTitle">Addresses</a></li>
+                        <li><a href="#tabsStreet" id="txtStreetTabTitle">Streets</a></li>
+                    </ul>
+                    <div id="tabsAddress">
+                        <table id="dgAddresses">
+                            <thead>
+                                <tr>
+                                    <th>Full Address</th>
+                                    <th>Mailing Neighborhood</th>
+                                    <th>Zip Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="tabsStreet">
+                        <table id="dgStreets">
+                            <thead>
+                                <tr>
+                                    <th>Street Name</th>
+                                    <th>Street Id</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div id="addressSearch" class="item">Address</div>
-        </div>
-        <div id="mapDiv">
-            <div id="HomeButton"></div>
-            <div id="OrthoButton"></div>
-        </div>
-    </div>
-
-    <div id="dlgSearch">
-        <input type="text" id="txtSearch" />
-        <button id="btnSearch">Search</button>
-        <img id="imgLoadingSpinner" src="Content/ajax-loader.gif" />
-        <br />
-
-        <div id="tabMain">
-          <ul>
-            <li><a href="#tabsAddress" id="txtAddressTabTitle">Addresses</a></li>
-            <li><a href="#tabsStreet" id="txtStreetTabTitle">Streets</a></li>
-          </ul>
-          <div id="tabsAddress">
-              <table id="dgAddresses">
-                  <thead>
-                      <tr>
-                        <th>Full Address</th>
-                        <th>Mailing Neighborhood</th>
-                        <th>Zip Code</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-              </table>
-          </div>
-          <div id="tabsStreet">
-            <table id="dgStreets">
-                <thead>
-                    <tr>
-                        <th>Street Name</th>
-                        <th>Street Id</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-          </div>
+            <div id="mapDiv">
+<!--                <div id="HomeButton"></div>
+                <div id="OrthoButton"></div>-->
+            </div>
         </div>
     </div>
 
-    <div id="dlgLoading">
+    <div id="dlgConfirmation">
+        TODO: Confirm address here
     </div>
 
 </body>

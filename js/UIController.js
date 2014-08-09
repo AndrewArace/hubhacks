@@ -69,6 +69,16 @@ var UIController = {
                 , position: { my: "left top", at: "right bottom", of: "#headerDiv" }
         });
 
+        $("#dlgConfirmation").dialog({
+            width: 400
+            , dialogClass: "NoCloseButton"
+            , autoOpen: false
+            , draggable: false
+            , height: 400
+            , collapsable: false
+            , resizable: false
+        });
+
     },
 
     updateAddressHeaderInfo: function (fullAddress, addressId) {

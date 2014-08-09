@@ -1,91 +1,36 @@
 ﻿html, body, #mapDiv, #fullPageDiv {
     padding: 0;
     margin: 0;
-    height: 100%;
     font-family: Arial;
 }
 
-#dgAddresses, #dgStreets {
-    width: 100%;
-    height: 100%;
+#mapDiv {
+    width:600px;
+    height:400px;
 }
 
 /* hide dialogs */
-#dlgSearch, #dlgSketching, #dlgSketchingCaddy, #dlgPermits {
+#dlgConfirmation {
     display:none;
 }
 
-#txtLocationDescription {
-    width: 95%;
-    height: 80px;
-}
 
-
-
-/* Map Buttons*/
-
+/* Map Buttons
 #HomeButton {
-    position: absolute;
+    position: relative;
     top: 145px;
     left: 20px;
     z-index: 50;
 }
 
 #OrthoButton {
-    position: absolute;
+    position: relative;
     top: 185px;
     left: 20px;
     z-index: 50;
 }
+*/
 
-
-/* Main Titlebar */
-#headerDiv {
-    width: 100%;
-    height: 50px;
-    background: #337697;
-}
-
-    #headerDiv .saveButton {
-        float: right;
-    }
-
-    #headerDiv .item {
-        float: right;
-        height: 48px;
-        line-height: 48px;
-        width: 80px;
-        border: 1px solid silver;
-        text-align: center;
-        display: table-cell;
-        vertical-align: middle;
-        color: #FFFFFF;
-        cursor: pointer;
-    }
-
-    #headerDiv .itemHover {
-        background: #ABCDDD;
-        color: #111111;
-    }
-
-    #headerDiv .itemActive {
-        background: #ABCDDD;
-        color: #111111;
-    }
-
-    #headerDiv .itemInfoBox {
-        position: absolute;
-        left: 10px;
-        top: 0px;
-    }
-        #headerDiv .itemInfoBox .title {
-            font-weight:bold;
-            margin-right:10px;
-        }
-
-    #headerDiv a {
-        color: #FFFFFF;
-    }
 
 /*jqueryui overrides*/
 /*
