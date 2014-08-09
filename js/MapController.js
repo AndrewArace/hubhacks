@@ -70,7 +70,6 @@ var MapController = {
 
     handleAddressPointClick: function (clickedPoint) {
         if (clickedPoint && clickedPoint.graphic && clickedPoint.graphic.attributes) {
-            console.log("highlight " + clickedPoint.graphic.attributes.addressId);
             ListController.highlightAddress(clickedPoint.graphic.attributes);
         }
     },
@@ -108,7 +107,6 @@ var MapController = {
             map.infoWindow.setContent(g.getContent());
             map.infoWindow.show(pt);
         }
-
     },
 
 
