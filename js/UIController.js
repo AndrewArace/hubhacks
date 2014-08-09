@@ -42,9 +42,11 @@ var UIController = {
 
     setLoading : function (isLoading) {
         if (isLoading) {
+            map.setMapCursor("wait");
             $("#imgLoadingSpinner").show();
         }
         else {
+            map.setMapCursor("default");
             $("#imgLoadingSpinner").hide();
         }
     }
