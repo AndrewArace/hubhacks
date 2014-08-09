@@ -6,6 +6,7 @@
 
 
     setResults: function (addresses) {
+      alert("ListController: todo: set " + addresses.length + " results...");
         ListController.clear();
     },
 
