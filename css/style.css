@@ -133,7 +133,9 @@ border:1px solid #6891AA;
 	line-height: 16px;
 	outline: none;
 	position: absolute;
-	width: 400px;
+	margin-left: -5px;
+	margin-top: -15px;
+	width: 500px;
 	z-index: 0;
 	-webkit-transition: background-color 200ms cubic-bezier(0.52,0,0.48,1);
 	-moz-transition: background-color 200ms cubic-bezier(0.52,0,0.48,1);
@@ -150,8 +152,7 @@ ul{
 	padding-right:10px;
 }
 
-.page-wrapper,
-.sidebar ul li{
+  ul li{
 	list-style: none;
 	font-size: inherit;
 	margin: 0;
