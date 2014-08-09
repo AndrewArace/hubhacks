@@ -16,7 +16,8 @@ var MapController = {
         this.glAddressHighlight = new esri.layers.GraphicsLayer();
 
         //geometry service
-        this.geomService = new esri.tasks.GeometryService("http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer");
+        //this.geomService = new esri.tasks.GeometryService("http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer");
+        this.geomService = new esri.tasks.GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");//http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer");
 
         //symbology
         this.symStreet = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color("blue"), 3);
@@ -61,10 +62,92 @@ var MapController = {
         map.resize();
     },
 
+  //SB
+    doBIDSearch: function (buildingID) {
 
+      alert("todo, search for address for buildingID: " + buildingID);//todo
+
+
+    },
+    doSAMSearchSpatial: function (geom) {
+
+      var queryTask = new esri.tasks.QueryTask("http://maps.cityofboston.gov/ArcGIS/rest/services/SAM/LIVE_SAM_ADDRESS/MapServer/0");
+
+      //initialize query
+      query = new esri.tasks.Query();
+      query.returnGeometry = true;
+      query.outFields = ["*"];
+      query.where = "0=0";
+      query.geometry = geom;
+
+      queryTask.on("complete", function (fs) {
+        alert("found " + fs.featureSet.features.length.toString() + " results!");
+      })
+      queryTask.execute(query);
+
+
+    },
     //map click
     handleMapClick: function (evt) {
 
+
+      //search for building at location
+      var queryTask = new esri.tasks.QueryTask("http://maps.cityofboston.gov/ArcGIS/rest/services/SAM/maint_tool/MapServer/11");
+
+      //initialize query
+      query = new esri.tasks.Query();
+      query.returnGeometry = true;
+      query.outFields = ["BID"];
+      query.where = "0=0";
+      query.geometry = evt.mapPoint;
+
+      queryTask.on("complete", function (fs) {
+        var resultFeatures = fs.featureSet.features;
+        if (resultFeatures != null && resultFeatures.length > 0) {
+          //if found building search for SAM addresses
+
+          var b = resultFeatures[0];
+          var buildingID = b.attributes.BID;
+
+          MapController.doBIDSearch(buildingID);
+          return;
+        }
+
+      });
+
+      queryTask.execute(query);
+
+      //region buffersearch
+
+      //if no building, do buffer of input point
+      var geometry = evt.mapPoint;
+
+      var symbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SQUARE, 10, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255, 0, 0]), 1), new dojo.Color([0, 255, 0, 0.25]));
+      var graphic = new esri.Graphic(geometry, symbol);
+
+      map.graphics.add(graphic);
+
+      //setup the buffer parameters
+      var params = new esri.tasks.BufferParameters();
+      params.distances = [100];//todo, config
+
+      //params.bufferSpatialReference = new esri.SpatialReference({ wkid: 102100 });
+      params.outSpatialReference = map.spatialReference;
+      params.unit = esri.tasks.GeometryService.UNIT_FOOT;
+
+      params.geometries = [geometry];
+      MapController.geomService.buffer(params, function (res) {
+        //search SAM database within buffer
+
+
+        MapController.doSAMSearchSpatial(res[0]);
+
+      });
+
+
+
+
+      //end region buffer search
     },
 
 
