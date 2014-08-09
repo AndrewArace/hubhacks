@@ -15,7 +15,7 @@
             s += "<li class='address-items'><strong>";
             s += "<span class='glyphicon glyphicon-map-marker'></span>" 
             s += addressEntry.fullAddress + ", ";
-            s += addressEntry.mailingNeighborhood + ", Boston ";
+            s += addressEntry.mailingNeighborhood + " ";
             s += addressEntry.zipCode;
             s += "</strong></li><hr/>";
         });
