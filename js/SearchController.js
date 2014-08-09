@@ -13,7 +13,6 @@ var SearchController = {
         $("#btnSearch").button().click(function (event) {
 
             MapController.clearMap();
-
             var searchString = $("#txtSearch").val();
 
             if (searchString == "" || searchString == null) {
@@ -30,63 +29,40 @@ var SearchController = {
         });
     },
 
+
+    searchSAMBuilding: function (buildingId) {
+        var url = searchServiceBuilding.replace("{0}", buildingId);
+
+        UIController.setLoading(true);
+        $.getJSON(url, function (data) {
+            ListController.setResults(data);
+            MapController.setResults(data);
+            }
+        ).always(function () {
+            UIController.setLoading(false);
+        });
+    },
+
+
     searchSAM: function (searchString) {
         var url = searchService.replace("{0}", searchString);
 
-        $("#txtSearch").prop("disabled", true);
-        $("#btnSearch").prop("disabled", true);
-        $("#imgLoadingSpinner").show();
+        //$("#txtSearch").prop("disabled", true);
+        //$("#btnSearch").prop("disabled", true);
+        UIController.setLoading(true);
 
         $.getJSON(url, function (data) {
             $("#tabMain").show("fold");
 
-            // var streetLength = 0;
-            // var addressLength = 0;
-
             if (!data)
                 return;
-
-            // if (data.streetResults != null) {
-            //     gridStreets.fnAddData(data.streetResults, true);
-            //     streetLength = data.streetResults.length;
-            // }
-
-            // var strString = "Streets ({0})".replace("{0}", streetLength);
-            // $("#txtStreetTabTitle").text(strString);
-
-            if (data.addressResults != null) {
-                // gridAddresses.fnAddData(data.addressResults, true);
-                // addressLength = data.addressResults.length;
-                ListController.setResults(data.addressResults);
-                MapController.setResults(data.addressResults);
-            }
-
-            // var addrString = "Addresses ({0})".replace("{0}", addressLength);
-            // $("#txtAddressTabTitle").text(addrString);
-
-            // //have to re add the click events every time the search results are repopulated.
-            // $("#dgAddresses tbody tr").click(function (event) {
-            //     UIController.rowHighlight($(this), gridAddresses);
-
-            //     var selectedItem = gridAddresses.fnGetData(this);
-            //     if (selectedItem != null) {
-            //         MapController.zoomAndCenterToAddress(selectedItem, true, true, true);
-            //     }
-            // });
-
-            // $("#dgStreets tbody tr").click(function (event) {
-            //     UIController.rowHighlight($(this), gridStreets);
-
-            //     var selectedItem = gridStreets.fnGetData(this);
-            //     if (selectedItem != null) {
-            //         MapController.zoomAndCenterToStreet(selectedItem, true, true, true);
-            //     }
-            // });
+            ListController.setResults(data.addressResults);
+            MapController.setResults(data.addressResults);
 
         }).always(function () {
-            $("#txtSearch").prop("disabled", false);
-            $("#btnSearch").prop("disabled", false);
-            $("#imgLoadingSpinner").hide();
+            //$("#txtSearch").prop("disabled", false);
+            //$("#btnSearch").prop("disabled", false);
+            UIController.setLoading(false);
         });
     }
 };

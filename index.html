@@ -1,208 +1,146 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
+<head>
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Where's My Address</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Where's My Address</title>
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-        <script src="js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="js/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="js/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" />
 
-        <!-- site styles, overriding above -->
-        <link rel="stylesheet" href="css/site.css" />
-        <link href="css/style.css" rel = "stylesheet">
-        <!--<link rel="stylesheet" href="js/OrthoButton/css/OrthoButton.css" />-->
+    <!-- site styles, overriding above -->
+    <link rel="stylesheet" href="css/site.css" />
+    <link href="css/style.css" rel="stylesheet">
 
-        <!-- DATATABLES Stuff -->
-        <script src="js/DataTables-1.9.4/js/jquery.dataTables.js"></script>
-        <style>
-            @import "js/DataTables-1.9.4/css/demo_table.css";
-            @import "js/DataTables-1.9.4/css/demo_page.css";
-        </style>
+    <!-- ESRI Mapping Stuff -->
+    <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css" />
 
-        <!-- ESRI Mapping Stuff -->
-        <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css" />
+    <!-- D3 Stuff -->
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 
-        <!-- D3 Stuff -->
-        <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://js.arcgis.com/3.10/"></script>
 
+    <script src="js/UIController.js"></script>
+    <script src="js/MapController.js"></script>
+    <script src="js/SearchController.js"></script>
+    <script src="js/ListController.js"></script>
 
-        <!--<script>
-            var dojoConfig = {
-                packages: [{
-                    name: "orthobutton",
-                    location: '/js/OrthoButton/js'
-                },
-                {
-                    name: "myModules",
-                    location: "/js/myModules"
-                }]
-            };
-        </script>-->
+    <script>
 
-        <script src="http://js.arcgis.com/3.9/"></script>
+        var searchService = "http://hubmaps1.cityofboston.gov/samrest/api/search?text={0}&callback=?";
+        var searchServiceBuilding = "http://hubmaps1.cityofboston.gov/samrest/api/address/?constrid={0}&callback=?";
 
-        <script src="js/UIController.js"></script>
-        <script src="js/MapController.js"></script>
-        <script src="js/SearchController.js"></script>
-        <script src="js/ListController.js"></script>
+        dojo.require("esri.map");
+        dojo.require("esri.layers.ArcGISTiledMapServiceLayer");
+        dojo.require("esri.layers.ArcGISDynamicMapServiceLayer");
+        dojo.require("esri.layers.FeatureLayer");
+        dojo.require("esri.layers.GraphicsLayer");
+        dojo.require("esri.tasks.query");
+        dojo.require("esri.tasks.route");
+        dojo.require("esri.tasks.QueryTask");
+        dojo.require("esri.tasks.geometry");
+        dojo.require("esri.graphic");
+        dojo.require("esri.geometry.mathUtils");
+        dojo.require("esri.geometry.ScreenPoint");
+        dojo.require("esri.geometry.Geometry");
+        dojo.require("esri.geometry.Point");
+        dojo.require("esri.geometry.Polyline");
+        dojo.require("esri.symbols.SimpleLineSymbol");
+        dojo.require("esri.symbols.SimpleMarkerSymbol");
+        dojo.require("esri.geometry.Extent");
+        dojo.require("esri.SnappingManager");
+        dojo.require("esri.InfoTemplate");
+        dojo.require("dojo._base.connect");
+        dojo.require("dojo._base.Color");
+        dojo.require("dojo.domReady!");
 
-        <script>
-            var gridStreets;
-            var gridAddresses;
+        (function ($) {
+            $.QueryString = (function (a) {
+                if (a == "") return {};
+                var b = {};
+                for (var i = 0; i < a.length; ++i) {
+                    var p = a[i].split('=');
+                    if (p.length != 2) continue;
+                    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                }
+                return b;
+            })(window.location.search.substr(1).split('&'))
+        })(jQuery);
 
-            var searchService = "http://hubmaps1.cityofboston.gov/samrest/api/search?text={0}&callback=?";
+        function init() {
+            esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer");
+            UIController.init();
+            MapController.init();
+            ListController.init();
+            SearchController.init();
+        }
 
-            dojo.require("esri.map");
-            dojo.require("esri.layers.ArcGISTiledMapServiceLayer");
-            dojo.require("esri.layers.ArcGISDynamicMapServiceLayer");
-            dojo.require("esri.layers.FeatureLayer");
-            dojo.require("esri.layers.GraphicsLayer");
-            dojo.require("esri.tasks.query");
-            dojo.require("esri.tasks.route");
-            dojo.require("esri.tasks.QueryTask");
-            dojo.require("esri.tasks.geometry");
-            dojo.require("esri.graphic");
-            dojo.require("esri.geometry.mathUtils");
-            dojo.require("esri.geometry.ScreenPoint");
-            dojo.require("esri.geometry.Geometry");
-            dojo.require("esri.geometry.Point");
-            dojo.require("esri.geometry.Polyline");
-            dojo.require("esri.symbols.SimpleLineSymbol");
-            dojo.require("esri.symbols.SimpleMarkerSymbol");
-            dojo.require("esri.geometry.Extent");
-            dojo.require("esri.SnappingManager");
-            dojo.require("esri.InfoTemplate");
-            dojo.require("dojo._base.connect");
-            dojo.require("dojo._base.Color");
-            //dojo.require("esri.dijit.HomeButton");
-            //dojo.require("orthobutton.OrthoButton");
-            //dojo.require("myModules.customoperation");
-            dojo.require("dojo.domReady!");
+        dojo.ready(init);
 
-            //esriConfig.defaults.io.proxyUrl = "http://localhost:62617/proxy.ashx";
-            //esriConfig.defaults.io.alwaysUseProxy = true;
+        //loads jquery ui elements
+        $(function () {
+            console.log('index.html > init()');
+        });
+    </script>
 
-            /*esri.addProxyRule({
-                urlPrefix: "http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer",
-                proxyUrl: "http://localhost:62617/proxy.ashx"
-            });*/
+</head>
 
-            (function ($) {
-                $.QueryString = (function (a) {
-                    if (a == "") return {};
-                    var b = {};
-                    for (var i = 0; i < a.length; ++i) {
-                        var p = a[i].split('=');
-                        if (p.length != 2) continue;
-                        b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-                    }
-                    return b;
-                })(window.location.search.substr(1).split('&'))
-            })(jQuery);
+<body>
 
-            // $(document).ready(function () {
+    <!--top bar-->
+    <div class="topheader">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h1>Where's My Address?</h1>
+            </div>
+        </div>
+    </div><!--close topheader-->
+    <!--search-->
+    <div class="search">
+        <div class="row">
+            <!-- search bar-->
+            <div class="col-md-8">
+                <input type="text" id="txtSearch" class="form-control" placeholder="Enter your Address">
+                <img id="imgLoadingSpinner" src="images/ajax-loader.gif" />
+            </div>
 
-            //     gridStreets = $("#dgStreets").dataTable({
-            //         bJQueryUI: true
-            //         , aoColumns: [
-            //             { mData: "streetName" }
-            //             , { mData: "streetId" }
-            //         ]
-            //     });
+            <!--search button-->
+            <div class="col-md-4"><button type="button" id="btnSearch" class="btn btn-default">Search</button></div>
 
-            //     gridAddresses = $("#dgAddresses").dataTable({
-            //         bJQueryUI: true
-            //         , aoColumns: [
-            //             { mData: "fullAddress" },
-            //             { mData: "mailingNeighborhood" },
-            //             { mData: "zipCode" }
-            //         ]
-            //     });
-            // });
+        </div><!--close row-->
 
+    </div><!--close search-->
+    <!--main page area-->
+    <div class="page-wrapper">
+        <div class="row">
 
-            function init() {
-                esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://support.geonetics.com/ArcGIS2/rest/services/Geometry/GeometryServer");
-                UIController.init();
-                MapController.init();
-                ListController.init();
-                SearchController.init();
-            }
+            <!--left results bar-->
+            <div class="sidebar">
+                <div class="col-md-4">
+                    <table class="result-table"></table>
+                </div><!-- columnmd7 div-->
+            </div><!--sidebar div-->
+            <!--map section-->
+            <div class="mapside">
+                <div class="col-md-8" id="mapDiv"></div>
+            </div>
 
-            dojo.ready(init);
-
-            //loads jquery ui elements
-            $(function () {
-                console.log('index.html > init()');
-            });
-        </script>
-
-    </head>
-
-    <body>
-
-    	<!--top bar-->
-		<div class = "topheader">
-			<div class="panel panel-default">
-				  <div class="panel-body">
-				    <h1>Where's My Address?</h1>
-            	  </div>
-			</div>
-		</div><!--close topheader-->
-
-        <!--search-->
-        <div class="search">
-            <div class="row">
-                <!-- search bar-->
-                <div class="col-md-8">
-                    <input type="text" id="txtSearch" class="form-control" placeholder="Enter your Address">
-                    <img id="imgLoadingSpinner" src="images/ajax-loader.gif"/>
-                </div>
-
-                <!--search button-->
-                <div class="col-md-4"><button type="button" id="btnSearch" class="btn btn-default">Search</button></div>
-
-            </div><!--close row-->
-
-        </div><!--close search-->
-
-        <!--main page area-->
-        <div class="page-wrapper">
-            <div class="row">
-
-                <!--left results bar-->
-                <div class="sidebar">
-                    <div class="col-md-4">
-                    <table class="result-table">
-                        
-                      </table>
-                     </div><!-- columnmd7 div-->
-                </div><!--sidebar div-->
-
-                <!--map section-->
-                <div class="mapside">
-                    <div class="col-md-8" id="mapDiv"></div>
-                </div>
-
-            </div><!--close row-->
-        </div><!--close page wrapper-->
-
+        </div><!--close row-->
+    </div><!--close page wrapper-->
     <!-- http://getbootstrap.com/javascript/ -->
-
     <!-- Button trigger modal -->
     <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
         Confirm Location
@@ -227,10 +165,10 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
                 </div>
+
             </div>
         </div>
     </div>
-
-    </body>
+</body>
 
 </html>
