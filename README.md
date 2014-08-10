@@ -5,7 +5,11 @@ City of Boston 2014 hubhacks challenge
 
 Live Endpoint
 -------
+Stand-alone
 http://andrewarace.github.io/hubhacks/
+
+Embedded in Permitting Wizard
+http://andrewarace.github.io/hubhacks/SiteLocation.html
 
 SAM REST Endpoint (with examples)
 -----
