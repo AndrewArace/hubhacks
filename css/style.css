@@ -240,6 +240,7 @@ transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 	font-size: 11px;
 	margin-top: 5px;
 	padding: 6px 6px 6px 6px;
+	float: right;
 }
 #no-result {
 	overflow:hidden;
