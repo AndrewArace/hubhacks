@@ -75,3 +75,26 @@
 .esriPopup .actionsPane {
     display:none;
 }
+
+/* ESRI popup styling */
+.esriPopup .contentPane {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.esriPopup .titlePane {
+background-color: #418780;
+color: #FFFFFF;
+line-height: 20px;
+padding-left: 6px;
+border-radius: 5px 5px 0px 0px;
+-webkit-border-radius: 5px 5px 0px 0px;
+cursor: default;
+font-size: 12px;
+}
+
+.popup-label{
+    color: #7A827F;
+    font-size: 12px;
+}

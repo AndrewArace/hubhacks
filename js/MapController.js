@@ -26,11 +26,14 @@ var MapController = {
         this.symAddress.setColor(new dojo.Color("red"));
 
         //address info template
-        this.infoAddress = new esri.InfoTemplate("Address ${addressId}", "Address: ${fullAddress}<br>" +
-            "Neighborhood: ${mailingNeighborhood}, ${zipCode}<br>"
-            + "Parcel ID: ${spatialParcelPID}<br>"
-            + "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal'>Confirm Location</button>"
+        this.infoAddress = new esri.InfoTemplate("Address ${addressId}", "<span class='popup-label'>Address:</span> ${fullAddress}<br>" +
+            "<span class='popup-label'>Neighborhood:</span> ${mailingNeighborhood}, ${zipCode}<br>"
+            + "<span class='popup-label'>Parcel ID:</span> ${spatialParcelPID}<br></span>"
+            + "<span class= 'popupbtn'><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal'>Confirm Location</button></span>"
             + "");
+        
+ 
+
 
         //map and layers
         

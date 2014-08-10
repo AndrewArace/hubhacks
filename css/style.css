@@ -235,3 +235,9 @@ transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 	padding-right:7px;
 	color:#6FB07F;
 }
+
+.popupbtn .btn{
+	font-size: 11px;
+	margin-top: 5px;
+	padding: 6px 6px 6px 6px;
+}
