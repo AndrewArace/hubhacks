@@ -249,22 +249,26 @@ var MapController = {
 
     setResults: function (addresses) {
         MapController.clearMap();
-        $.each(addresses, function (index, value) {
-            MapController.drawAddress(value);
-        });
+        if (addresses) {
 
-        if (addresses.length > 0) {
-            var ext = esri.graphicsExtent(MapController.glAddressHighlight.graphics);
-            ext.spatialReference = map.spatialReference;
-            if (ext.getWidth() > 0) {
-                map.setExtent(ext, true);
-            }
-            else {
-                var geo = MapController.glAddressHighlight.graphics[0].geometry;
-                geo.spatialReference = map.spatialReference;
-                map.centerAndZoom(MapController.glAddressHighlight.graphics[0].geometry, maxZoomLevel);
+            $.each(addresses, function (index, value) {
+                MapController.drawAddress(value);
+            });
+
+            if (addresses.length > 0) {
+                var ext = esri.graphicsExtent(MapController.glAddressHighlight.graphics);
+                ext.spatialReference = map.spatialReference;
+                if (ext.getWidth() > 0) {
+                    map.setExtent(ext, true);
+                }
+                else {
+                    var geo = MapController.glAddressHighlight.graphics[0].geometry;
+                    geo.spatialReference = map.spatialReference;
+                    map.centerAndZoom(MapController.glAddressHighlight.graphics[0].geometry, maxZoomLevel);
+                }
             }
         }
+
     },
 
 
