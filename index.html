@@ -164,14 +164,21 @@
                     ]
                 });
                 
-                firstRun = false;
+                // SET TO FALSE TO STOP AUTO-PLAY AFTER FIRST RUN
+                // firstRun = false;
                 return intro;
             }
 
             recreateIntro().start();
 
+            // Re-open intro upon help button click
             $('#btn-intro-help').click(function(e) {
-                recreateIntro().goToStep(currentStep).start();
+
+                // Causes non-autoplay from last slide
+                // recreateIntro().goToStep(currentStep).start();
+
+                // Causes non-autoplay from third slide (search in 1 of 2 ways...)
+                recreateIntro().goToStep(3).start();
             });
         }
 
