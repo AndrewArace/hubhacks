@@ -155,7 +155,7 @@ ul{
 	padding-right:10px;
 }*/
 
-  ul li{
+ ul li{
 	list-style: none;
 	font-size: inherit;
 	margin: 0;
@@ -240,4 +240,13 @@ transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 	font-size: 11px;
 	margin-top: 5px;
 	padding: 6px 6px 6px 6px;
+
+#no-result {
+	overflow:hidden;
+}
+
+#clear-results {
+	float: right;
+	color: #FC856E;
+
 }

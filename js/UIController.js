@@ -34,7 +34,6 @@ var UIController = {
         $(window).on('resize', function (event) {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function () {
-                console.log("window resize");
                 map.resize();
             }, 500);
         });

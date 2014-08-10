@@ -36,7 +36,7 @@ var MapController = {
 
 
         //map and layers
-        
+
         var defaultExtent = new esri.geometry.Extent({ xmin: 758267.6416778979, ymin: 2949455.6614452596, xmax: 791305.8361223424, ymax: 2961122.3281119266, spatialReference: { wkid: 2249 } });
         map = new esri.Map("mapDiv", {
             extent: defaultExtent
@@ -69,18 +69,20 @@ var MapController = {
             map: map
         }, "LocateButton");
         geoLocate.startup();
+
         /*
         var home = new esri.dijit.HomeButton({
             map: map
         }, "HomeButton");
         home.startup();
+        */
 
         var ortho = new esri.dijit.OrthoButton({
             mapService: ortholayer,
-            serviceVisible : false
+            serviceVisible: false
         }, "OrthoButton");
         ortho.startup();
-        */
+
         map.resize();
     },
 
@@ -145,7 +147,13 @@ var MapController = {
                 //}
             }
 
-            ListController.setResults(addresses);
+
+            if (addresses && addresses.length == 1) {
+                ListController.setResults(addresses, " nearby address");
+            }
+            else {
+                ListController.setResults(addresses, " nearby addresses");
+            }
             MapController.setResults(addresses);
             UIController.setLoading(false);
 
@@ -250,22 +258,31 @@ var MapController = {
 
     setResults: function (addresses) {
         MapController.clearMap();
-        $.each(addresses, function (index, value) {
-            MapController.drawAddress(value);
-        });
+        if (addresses) {
 
-        if (addresses.length > 0) {
-            var ext = esri.graphicsExtent(MapController.glAddressHighlight.graphics);
-            ext.spatialReference = map.spatialReference;
-            if (ext.getWidth() > 0) {
-                map.setExtent(ext, true);
+            $.each(addresses, function (index, value) {
+                MapController.drawAddress(value);
+            });
+
+            if (addresses.length > 0) {
+                var ext = esri.graphicsExtent(MapController.glAddressHighlight.graphics);
+                ext.spatialReference = map.spatialReference;
+                if (ext.getWidth() > 0) {
+                    map.setExtent(ext, true);
+                }
+                else {
+                    var geo = MapController.glAddressHighlight.graphics[0].geometry;
+                    geo.spatialReference = map.spatialReference;
+                    map.centerAndZoom(MapController.glAddressHighlight.graphics[0].geometry, maxZoomLevel);
+                }
             }
-            else {
-                var geo = MapController.glAddressHighlight.graphics[0].geometry;
-                geo.spatialReference = map.spatialReference;
-                map.centerAndZoom(MapController.glAddressHighlight.graphics[0].geometry, maxZoomLevel);
+            if (addresses.length == 1) {
+                //if there is only one result, we should pop up the info window
+                MapController.highlightAddress(addresses[0]);
+                ListController.highlightAddress(addresses[0]);
             }
         }
+
     },
 
 
