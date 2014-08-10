@@ -20,6 +20,10 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="js/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" />
 
+    <!-- IntroJS -->
+    <link rel="stylesheet" href="js/IntroJS/minified/introjs.min.css" />
+    <script type="text/javascript" src="js/IntroJS/minified/intro.min.js"></script>
+
     <!-- site styles, overriding above -->
     <link rel="stylesheet" href="css/site.css" />
     <link href="css/style.css" rel="stylesheet">
@@ -79,12 +83,90 @@
             })(window.location.search.substr(1).split('&'))
         })(jQuery);
 
+        
+        function startIntro() {
+
+            var currentStep = 0;
+            var timeout = null;
+            var firstRun = true;
+
+            var transitionTimes = {
+                1: null,
+                2: 10000,
+                3: 5000,
+                4: 10000,
+                5: 10000,
+                6: 10000,
+                7: 10000,
+                8: 10000,
+                9: 20000
+            }
+
+            function recreateIntro() {
+                var intro = introJs();
+                var autoAdvance = firstRun;
+                intro.onchange(function(targetElement) {
+                    currentStep = intro._currentStep + 1;
+                    clearTimeout(timeout);
+                    if (autoAdvance && (transitionTimes[currentStep])) {
+                        timeout = setTimeout(function() {
+                            intro.nextStep();
+                        }, transitionTimes[currentStep]);
+                    }
+                });
+                intro.onexit(function() {
+                    clearTimeout(timeout);
+                })
+                intro.setOptions({
+                    skipLabel: 'Hide',
+                    steps: [                  
+                        {
+                            intro: "<h1 class='introjs-header'>Find your Official Address</h1><p>The City of Boston needs your Official Address on your permit.<p>Your Official Address may not be the same as the street address you typically use. This tool will help you find your Official Address from your street address.</p><p><b>Please choose your Official Address with care</b>, or your permit application may be delayed.</p><br/><p>Click 'Next' when you are ready to continue.</p>"
+                        },
+                        {
+                            intro: "<h1 class='introjs-header'>Getting help</h1><p>If you need a refresher, you can always access the help here.</p>",
+                            element: document.querySelector('#btn-intro-help'),
+                            position: 'left'
+                        },
+                        {
+                            intro: "<h1 class='introjs-header'>Search in 1 of 2 ways...</h1>"
+                        },
+                        {
+                            intro: "<h1 class='introjs-header'>Search by street address</h1><p>Type in your stress address and press 'Enter' or click the search button to continue.</p>",
+                            element: document.querySelector('#search-bar')
+                        },
+                        {
+                            intro: "<h1 class='introjs-header'>...or by clicking on the map</h1><p>Click a building or location on the map to search for nearby  addresses.</p>",
+                        },
+                        {
+                            intro: "<h1 class='introjs-header'>Jump to your location</h1><p>Click here and the map will zoom to your current location if you allow your browser to share your location.</p>",
+                            element: document.querySelector('#LocateButton')
+                        },
+                        {
+                            intro: "<h1 class='introjs-header'>Search Results</h1><p>Address search results will be listed under the search box and displayed as pins on the map.</p><p>Select an address and verify its location on the map. If the address is correct, click the 'Confirm Address' button that appears.</p>",
+                        }                
+                    ]
+                });
+                
+                firstRun = false;
+                return intro;
+            }
+
+            recreateIntro().start();
+
+            $('#btn-intro-help').click(function(e) {
+                recreateIntro().goToStep(currentStep).start();
+            });
+        }
+
         function init() {
             esri.config.defaults.geometryService = new esri.tasks.GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
             UIController.init();
             MapController.init();
             ListController.init();
             SearchController.init();
+
+            startIntro();
         }
 
         dojo.ready(init);
@@ -103,6 +185,7 @@
         <div class="topheader">
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <button type="button" id="btn-intro-help" class="btn btn-default pull-right"><span class="glyphicon glyphicon-question-sign"></span></button>
                     <h1 id="app-logo">Where's My Address?</h1>
                 </div>
             </div>
@@ -116,11 +199,12 @@
 
         <!--search-->
         <div class="search">
-            <div class="searchBar">
+            <div class="searchBar" id="search-bar">
                 <!-- search bar-->
                     <input type="text" autocomplete = "off" id="txtSearch" placeholder="Search..." class="search-bar-input" required>
                     <!--search button-->
 	                <button type="button" id="btnSearch" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+
 	                <img id="imgLoadingSpinner" src="images/ajax-loader.gif" />
 
             </div><!--close row-->
