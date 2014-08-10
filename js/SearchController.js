@@ -60,18 +60,12 @@ var SearchController = {
         $.getJSON(url, function (data) {
             $("#tabMain").show("fold");
 
-<<<<<<< HEAD
-            if (!data)
-                return;
-            ListController.setResults(data.addressResults, " addresses found");
-=======
             if (data && data.length == 1) {
-                ListController.setResults(data.addressResults, "address found");
+                ListController.setResults(data.addressResults, " address found");
             }
             else {
-                ListController.setResults(data.addressResults, "addresses found");
-            }
->>>>>>> 86bb21a76b28a0eab7d2d80cff89a86c47c8de8b
+                ListController.setResults(data.addressResults, " addresses found");
+            } 
             MapController.setResults(data.addressResults);
 
         }).always(function () {
