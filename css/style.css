@@ -252,3 +252,15 @@ transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 	color: #FC856E;
 
 }
+
+.header, .panel.panel-default, .panel-body{ 
+	box-shadow: 0px 0px 2px 0px #9BA4AA; 
+} 
+
+.panel { 
+	border: 0px; margin-left:0px; padding-left:0px; 
+} 
+
+.header, .panel.panel-default, .panel-body h1 {
+	margin-top:-2px; 
+}

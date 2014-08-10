@@ -187,3 +187,39 @@ margin: 0 0 5px;
     padding-bottom: 5px;
 }
 
+
+/* INTRO */
+.introjs-helperNumberLayer {
+    line-height: 13px;
+}
+
+.introjs-tooltip {
+    min-width: 400px;
+    max-width: 600px;
+}
+
+.introjs-header {
+    text-align: center;
+    font-size: 32px;
+    line-height: 32px;
+    margin-bottom: 16px;
+}
+
+.introjs-tooltiptext > p {
+    font-size: 16px;
+    line-height: 16px;
+    margin: 0 10px 10px 10px;
+}
+
+#btn-intro-help {
+    position: relative;
+    z-index: 1050;
+    top: -4px;
+    border: none; 
+    background: transparent;
+    font-size: 24px;
+    line-height: 24px;
+    padding: 0px;
+    color: #FFF;
+}
+#btn-intro-help:focus {outline:0 !important;}
