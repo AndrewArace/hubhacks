@@ -123,6 +123,8 @@ border:1px solid #6891AA;
 }
 
 .result-table{
+	max-height:80%;
+	overflow-y:scroll;
 	background: #fff;
 	border-radius: 2px;
 	box-shadow: 0 2px 6px rgba(0,0,0,0.3);
