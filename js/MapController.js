@@ -242,20 +242,6 @@ var MapController = {
     },
 
 
-    //draw functions
-    drawStreetPolyline: function (feature, bDrawOnMap, bClearMap) {
-        if (bDrawOnMap) {
-
-            if (bClearMap) {
-                MapController.glStreetHighlight.clear();
-            }
-
-            feature.setSymbol(MapController.symStreet);
-            MapController.glStreetHighlight.add(feature);
-        }
-    },
-
-
     setResults: function (addresses) {
         MapController.clearMap();
         if (addresses) {
