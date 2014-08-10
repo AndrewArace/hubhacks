@@ -178,7 +178,8 @@
                 // recreateIntro().goToStep(currentStep).start();
 
                 // Causes non-autoplay from third slide (search in 1 of 2 ways...)
-                recreateIntro().goToStep(3).start();
+                var startingStep = (currentStep > 2) ? 3 : 1;
+                recreateIntro().goToStep(startingStep).start();
             });
         }
 
