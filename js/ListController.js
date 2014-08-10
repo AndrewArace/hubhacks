@@ -73,6 +73,7 @@
                 d3.select(".confirmation-mailing-neighborhood").html("<p>" + d.mailingNeighborhood + "</p>");
                 d3.select(".confirmation-zip-code").html("<p>" + d.zipCode + "</p>");
                 d3.select(".confirmation-spatial-parcel-pid").html("<p>" + d.spatialParcelPID + "</p>");
+                d3.select(".confirmation-sam-id").html("<p>" + d.addressId + "</p>");
             });
         }
     },
@@ -83,6 +84,7 @@
         d3.select(".confirmation-mailing-neighborhood").html("<p>" + d.mailingNeighborhood + "</p>");
         d3.select(".confirmation-zip-code").html("<p>" + d.zipCode + "</p>");
         d3.select(".confirmation-spatial-parcel-pid").html("<p>" + d.spatialParcelPID + "</p>");
+        d3.select(".confirmation-sam-id").html("<p>" + d.addressId + "</p>");
     },
 
     clear: function () {
