@@ -124,7 +124,7 @@ border:1px solid #6891AA;
 }
 
 .result-table{
-	max-height:333px;/*36px * 9 items + 9px*/
+	max-height:332px;/*36px * 9 items + 8px*/
 	overflow-y:scroll;
 	background: #fff;
 	border-radius: 2px;
@@ -223,4 +223,15 @@ transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 .LocateButton .zoomLocateButton {
 	margin-top:1px;
 	margin-left:1px;
+}
+
+#list-results {
+	margin-top:0px;
+	margin-bottom:0px;
+	color:#4588EC;
+}
+
+.glyphicon-map-marker {
+	padding-right:7px;
+	color:#6FB07F;
 }
