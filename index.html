@@ -30,6 +30,21 @@
 
     <!-- ESRI Mapping Stuff -->
     <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css" />
+    <link rel="stylesheet" href="js/OrthoButton/css/OrthoButton.css" />
+    <script>
+    var dojoConfig = {
+        packages: [{
+            name: "orthobutton",
+            location: location.pathname.replace(/\/[^/]+$/, "") + '/js/OrthoButton/js'
+        }]
+    };
+    </script>
+
+
+        <!-- site styles, overriding above -->
+    <link rel="stylesheet" href="css/site.css" />
+    <link href="css/style.css" rel="stylesheet">
+    
 
     <!-- D3 Stuff -->
     <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
@@ -66,6 +81,7 @@
         dojo.require("esri.SnappingManager");
         dojo.require("esri.InfoTemplate");
         dojo.require("esri.dijit.LocateButton");
+        dojo.require("orthobutton.OrthoButton");
         dojo.require("dojo._base.connect");
         dojo.require("dojo._base.Color");
         dojo.require("dojo.domReady!");
@@ -92,14 +108,14 @@
 
             var transitionTimes = {
                 1: null,
-                2: 10000,
-                3: 5000,
-                4: 10000,
-                5: 10000,
-                6: 10000,
-                7: 10000,
-                8: 10000,
-                9: 20000
+                2: 8000,
+                3: 8000,
+                4: 16000,
+                5: 16000,
+                6: 16000,
+                7: 16000,
+                8: 16000,
+                9: 32000
             }
 
             function recreateIntro() {
@@ -166,7 +182,10 @@
             ListController.init();
             SearchController.init();
 
+            $("#txtSearch").focus();
+
             startIntro();
+
         }
 
         dojo.ready(init);
@@ -193,9 +212,8 @@
 
         <div id="mapDiv">
             <div id="LocateButton"></div>
+            <div id="OrthoButton"></div>
         </div>
-
-        <!--<button class="btn btn-primary btn-lg" style="position:absolute;right:10px;top:0px;" data-toggle="modal" data-target="#myModal">Confirm Location</button>-->
 
         <!--search-->
         <div class="search">
@@ -211,7 +229,7 @@
 
         </div><!--close search-->
         <!--main page area-->
-        <ul class="result-table"></table>
+        <div class="result-content"></div>
     </div>
 
     <!-- Modal -->
@@ -220,9 +238,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Confirm Location</h4>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Address</h4>
                 </div>
                 <div class="modal-body">
+                	<span class="confirmation-dialog"><h3>Are you sure this is the correct address?</h3></span>
                     <p class="confirmation-address-id"></p>
                     <p class="confirmation-full-address"></p>
                     <p class="confirmation-mailing-neighborhood"></p>
@@ -237,6 +256,8 @@
             </div>
         </div>
     </div>
+        </div>
+
 </body>
 
 </html>
