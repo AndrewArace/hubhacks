@@ -144,7 +144,7 @@ var MapController = {
                 //}
             }
 
-            ListController.setResults(addresses);
+            ListController.setResults(addresses, "nearby addresses");
             MapController.setResults(addresses);
             UIController.setLoading(false);
 

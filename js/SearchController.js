@@ -35,7 +35,7 @@ var SearchController = {
 
         UIController.setLoading(true);
         $.getJSON(url, function (data) {
-            ListController.setResults(data);
+            ListController.setResults(data, "addresses in building");
             MapController.setResults(data);
             }
         ).always(function () {
@@ -47,8 +47,8 @@ var SearchController = {
     searchSAM: function (searchString) {
         var url = searchService.replace("{0}", searchString);
 
-        //$("#txtSearch").prop("disabled", true);
-        //$("#btnSearch").prop("disabled", true);
+        $("#txtSearch").prop("disabled", true);
+        $("#btnSearch").prop("disabled", true);
         UIController.setLoading(true);
 
         $.getJSON(url, function (data) {
@@ -56,12 +56,12 @@ var SearchController = {
 
             if (!data)
                 return;
-            ListController.setResults(data.addressResults);
+            ListController.setResults(data.addressResults, "addresses found");
             MapController.setResults(data.addressResults);
 
         }).always(function () {
-            //$("#txtSearch").prop("disabled", false);
-            //$("#btnSearch").prop("disabled", false);
+            $("#txtSearch").prop("disabled", false);
+            $("#btnSearch").prop("disabled", false);
             UIController.setLoading(false);
         });
     }
