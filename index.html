@@ -31,11 +31,7 @@
     var dojoConfig = {
         packages: [{
             name: "orthobutton",
-            location: '/js/OrthoButton/js'
-        },
-        {
-            name: "myModules",
-            location: "/js/myModules"
+            location: location.pathname.replace(/\/[^/]+$/, "") + '/js/OrthoButton/js'
         }]
     };
     </script>

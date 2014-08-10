@@ -33,7 +33,7 @@ var MapController = {
             + "");
 
         //map and layers
-        
+
         var defaultExtent = new esri.geometry.Extent({ xmin: 758267.6416778979, ymin: 2949455.6614452596, xmax: 791305.8361223424, ymax: 2961122.3281119266, spatialReference: { wkid: 2249 } });
         map = new esri.Map("mapDiv", {
             extent: defaultExtent
@@ -76,7 +76,7 @@ var MapController = {
 
         var ortho = new esri.dijit.OrthoButton({
             mapService: ortholayer,
-            serviceVisible : false
+            serviceVisible: false
         }, "OrthoButton");
         ortho.startup();
 
