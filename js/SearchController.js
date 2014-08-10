@@ -35,7 +35,7 @@ var SearchController = {
 
         UIController.setLoading(true);
         $.getJSON(url, function (data) {
-            ListController.setResults(data, "addresses in building");
+            ListController.setResults(data, " addresses in building");
             MapController.setResults(data);
             }
         ).always(function () {
@@ -56,7 +56,7 @@ var SearchController = {
 
             if (!data)
                 return;
-            ListController.setResults(data.addressResults, "addresses found");
+            ListController.setResults(data.addressResults, " addresses found");
             MapController.setResults(data.addressResults);
 
         }).always(function () {
