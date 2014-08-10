@@ -12,6 +12,13 @@
     z-index:50;
 }
 
+#OrthoButton {
+    position: absolute;
+    top: 175px;
+    left: 20px;
+    z-index: 50;
+}
+
 /* hide dialogs */
 #dlgConfirmation {
     display:none;

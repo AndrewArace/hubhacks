@@ -26,6 +26,20 @@
 
     <!-- ESRI Mapping Stuff -->
     <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css" />
+    <link rel="stylesheet" href="js/OrthoButton/css/OrthoButton.css" />
+    <script>
+    var dojoConfig = {
+        packages: [{
+            name: "orthobutton",
+            location: '/js/OrthoButton/js'
+        },
+        {
+            name: "myModules",
+            location: "/js/myModules"
+        }]
+    };
+    </script>
+
 
     <!-- D3 Stuff -->
     <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
@@ -62,6 +76,7 @@
         dojo.require("esri.SnappingManager");
         dojo.require("esri.InfoTemplate");
         dojo.require("esri.dijit.LocateButton");
+        dojo.require("orthobutton.OrthoButton");
         dojo.require("dojo._base.connect");
         dojo.require("dojo._base.Color");
         dojo.require("dojo.domReady!");
@@ -103,13 +118,14 @@
         <div class="topheader">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h1 id="app-logo">Where's My Address?</h1>
+                    <h1 id="app-logo">Where is My Address?</h1>
                 </div>
             </div>
         </div><!--close topheader-->
 
         <div id="mapDiv">
             <div id="LocateButton"></div>
+            <div id="OrthoButton"></div>
         </div>
 
         <!--<button class="btn btn-primary btn-lg" style="position:absolute;right:10px;top:0px;" data-toggle="modal" data-target="#myModal">Confirm Location</button>-->
