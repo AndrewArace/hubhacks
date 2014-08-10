@@ -109,3 +109,61 @@ font-size: 12px;
 .esriPopup .sizer {
 width: 230px;
 }
+
+.modal-content{
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.modal-header{
+    background-color: #5EC4BB;
+    color: #ffffff;
+    padding: 5px;
+    padding-left: 7px;
+}
+
+.modal-body{
+    padding: 5px;
+    text-align: center;
+}
+
+@media (min-width:768px){.modal-dialog{width:330px;}}
+
+.modal-body p{
+    display:inline;
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
+
+}
+
+.modal-body p.confirmation-spatial-parcel-pid{
+    display:block;
+    font-size: 10px;
+}
+
+.modal-footer{
+    padding: 5px;
+}
+
+p {
+margin: 0 0 5px;
+}
+
+.confirmation-dialog h3{
+    font-size: 12px;
+    font-style: italic;
+    color: #354E63;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.modal-footer .btn+.btn {
+    padding: 4px;
+    font-size: 12px;
+}
+
+.modal-footer .btn{
+    padding: 4px;
+    font-size: 12px;
+}
