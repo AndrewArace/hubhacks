@@ -267,6 +267,11 @@ var MapController = {
                     map.centerAndZoom(MapController.glAddressHighlight.graphics[0].geometry, maxZoomLevel);
                 }
             }
+            if (addresses.length == 1) {
+                //if there is only one result, we should pop up the info window
+                MapController.highlightAddress(addresses[0]);
+                ListController.highlightAddress(addresses[0]);
+            }
         }
 
     },
