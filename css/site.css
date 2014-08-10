@@ -91,7 +91,7 @@
 }
 
 .esriPopup .titlePane {
-background-color: #418780;
+background-color: #5EC4BB;
 color: #FFFFFF;
 line-height: 20px;
 padding-left: 6px;
@@ -138,8 +138,13 @@ width: 230px;
 }
 
 .modal-body p.confirmation-spatial-parcel-pid{
-    display:block;
+    display:inline-block;
     font-size: 10px;
+}
+
+.modal-body p.parcel-label{
+    display: inline-block;
+    font-size: 12px;
 }
 
 .modal-footer{
@@ -161,12 +166,27 @@ margin: 0 0 5px;
 .modal-footer .btn+.btn {
     padding: 4px;
     font-size: 12px;
+    background-color:#6FB07F;
+    color: #ffffff;
+    border-color:#6FB07F;
+
 }
 
 .modal-footer .btn{
     padding: 4px;
     font-size: 12px;
+    background-color:#FC856E;
+    color: #ffffff;
+    border-color:#FC856E;
 }
+
+.modal-footer .glyphicon{
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 5px;
+}
+
 
 /* INTRO */
 .introjs-helperNumberLayer {
