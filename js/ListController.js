@@ -11,18 +11,20 @@
 
         var s = "";
 
+        s += "<li><h5 id='list-results'>Showing Nearby Results</h5></li><hr/>"
+
         addresses.forEach(function (addressEntry) {
             s += "<li class='address-items'><strong>";
             s += "<span class='glyphicon glyphicon-map-marker'></span>" 
             s += addressEntry.fullAddress + ", ";
-            s += addressEntry.mailingNeighborhood + ", Boston ";
+            s += addressEntry.mailingNeighborhood + " ";
             s += addressEntry.zipCode;
             s += "</strong></li><hr/>";
         });
 
         d3.select(".result-table").html(s);
 
-        d3.selectAll("ul li").data(addresses).on("mouseover", function () {
+        d3.selectAll("ul li.address-items").data(addresses).on("mouseover", function () {
             d3.select(this).style("background-color", "rgba(200, 200, 200, 0.5)").style("cursor", "pointer");
         }).on("mouseout", function () {
             d3.select(this).style("background-color", "white");
