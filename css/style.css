@@ -135,7 +135,7 @@ border:1px solid #6891AA;
 	position: absolute;
 	margin-left: -5px;
 	margin-top: -15px;
-	width: 500px;
+	width: 373px;
 	z-index: 0;
 	-webkit-transition: background-color 200ms cubic-bezier(0.52,0,0.48,1);
 	-moz-transition: background-color 200ms cubic-bezier(0.52,0,0.48,1);
