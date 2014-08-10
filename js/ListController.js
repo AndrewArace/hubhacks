@@ -5,8 +5,6 @@
     },
 
     setResults: function (addresses, strLabel) {
-        ListController.clear();
-
         //  Display the table rows dynamically.
 
         var s = "";
@@ -24,12 +22,14 @@
             if(addresses.length > 8)
             {
                 s += "<ul class='result-table'>";
-                s += "<li><h5 id='list-results'>" + addresses.length + strLabel + "</h5></li><hr/>";
+                s += "<li><h5 id='list-results'>" + addresses.length + strLabel + "<span id='clear-results'>Clear</span>" + "</h5>";
+                s += "</li><hr/>";
             }
             else
             {
                 s += "<ul class='result-table' id='no-result'>";
-                s += "<li><h5 id='list-results'>" + addresses.length + strLabel + "</h5></li><hr/>";
+                s += "<li><h5 id='list-results'>" + addresses.length + strLabel + "<span id='clear-results'>Clear</span>" + "</h5>";
+                s += "</li><hr/>";
             }
 
             addresses.forEach(function (addressEntry) {
@@ -45,6 +45,12 @@
         } 
 
         d3.select(".result-content").html(s);
+
+        d3.select("#clear-results").on("mouseover", function () {
+                d3.select(this).style("cursor", "pointer");
+            }).on("click", function(){
+            ListController.clear();
+        });
 
         if(addresses !== null)
         {
@@ -74,6 +80,8 @@
 
     clear: function () {
         //TODO: clear results grid
+        d3.select("ul.result-table").remove();
+        MapController.clearMap();
     }
 
 }
