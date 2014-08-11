@@ -86,6 +86,11 @@ var MapController = {
 
     doSAMSearchSpatial: function (geom) {
         var queryTask = new esri.tasks.QueryTask("http://maps.cityofboston.gov/ArcGIS/rest/services/SAM/LIVE_SAM_ADDRESS/MapServer/0");
+        var bBackup = true;
+
+        if (bBackup) {
+            queryTask = new esri.tasks.QueryTask("http://maps.cityofboston.gov/ArcGIS/rest/services/Live_SAM_Addr_BKP/MapServer/0");
+        }
 
         //initialize query
         query = new esri.tasks.Query();
@@ -110,13 +115,26 @@ var MapController = {
 
                 var f = fs.featureSet.features[i];
                 var j = {};
-                j.addressId = f.attributes.BUILDING_ID;
-                j.fullAddress = f.attributes.FULL_ADDRESS;
-                j.zipCode = f.attributes.ZIP_CODE;
-                j.mailingNeighborhood = f.attributes.MAILING_NEIGHBORHOOD;
-                j.spatialParcelPID = f.attributes.PARCEL;
-                j.xCoord = f.attributes.X_COORD;
-                j.yCoord = f.attributes.Y_COORD;
+
+                if (!bBackup) {
+                    j.addressId = f.attributes.BUILDING_ID;
+                    j.fullAddress = f.attributes.FULL_ADDRESS;
+                    j.zipCode = f.attributes.ZIP_CODE;
+                    j.mailingNeighborhood = f.attributes.MAILING_NEIGHBORHOOD;
+                    j.spatialParcelPID = f.attributes.PARCEL;
+                    j.xCoord = f.attributes.X_COORD;
+                    j.yCoord = f.attributes.Y_COORD;
+                }
+                else {
+                    j.addressId = f.attributes.BUILDING_I;
+                    j.fullAddress = f.attributes.FULL_ADDRE;
+                    j.zipCode = f.attributes.ZIP_CODE;
+                    j.mailingNeighborhood = f.attributes.MAILING_NE;
+                    j.spatialParcelPID = f.attributes.PARCEL;
+                    j.xCoord = f.attributes.X_COORD;
+                    j.yCoord = f.attributes.Y_COORD;
+                }
+
                 addresses.push(j);
 
                 //{
