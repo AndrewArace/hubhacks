@@ -86,7 +86,7 @@ var MapController = {
 
     doSAMSearchSpatial: function (geom) {
         var queryTask = new esri.tasks.QueryTask("http://maps.cityofboston.gov/ArcGIS/rest/services/SAM/LIVE_SAM_ADDRESS/MapServer/0");
-        var bBackup = true;
+        var bBackup = false;
 
         if (bBackup) {
             queryTask = new esri.tasks.QueryTask("http://maps.cityofboston.gov/ArcGIS/rest/services/Live_SAM_Addr_BKP/MapServer/0");
